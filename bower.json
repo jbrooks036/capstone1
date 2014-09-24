@@ -1,11 +1,11 @@
 {
-  "name": "mean-template",
+  "name": "capstone1",
   "version": "0.0.0",
-  "homepage": "https://github.com/nss-cohort-2014-06-07/mean-template",
+  "homepage": "https://github.com/jbrooks036/mean-template",
   "authors": [
-    "Chyld Medford <chyld.medford@gmail.com>"
+    "JoAnn Brooks <joannbrooks036@gmail.com>"
   ],
-  "description": "The MEAN Template",
+  "description": "Capstone 1",
   "license": "MIT",
   "dependencies": {
     "angular": "1.3.0-rc.2",
