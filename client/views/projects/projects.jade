@@ -1,0 +1,38 @@
+h3 Projects Page!
+
+.row
+  .col-xs-3
+    form(novalidate, name='projectForm', role='form')
+      .form-group
+        label(for='name') Name
+        input.form-control#name(name='name', type='text', ng-model='project.name', required, ng-minlength='3', autofocus)
+      .form-group
+        label(for='due') Due
+        input.form-control#due(name='due', type='date', ng-model='project.due', required)
+      .form-group
+        button.btn.btn-success(ng-show='projectForm.$valid', ng-click='add()') Add Project
+.row
+  .col-xs-9
+    .panel.panel-default
+      .panel-body
+        .form-group
+          label(for='sort') Sort
+          select.form-control(name='sort', ng-model='sort')
+            option(value='name') Name Ascending
+            option(value='-name') Name Descending
+            option(value='due') Due Ascending
+            option(value='-due') Due Descending
+
+        table.table.table-bordered
+          thead
+            tr
+              // th Complete?
+              th Name
+              th Due
+          tbody
+            // tr(ng-repeat='p in projects | orderBy:sort', ng-class='{complete:p.isComplete}')
+            tr(ng-repeat='p in projects | orderBy:sort')
+              // td: input(type='checkbox', ng-model='p.isComplete')
+              td {{p.name}}
+              td {{p.due | date}}
+

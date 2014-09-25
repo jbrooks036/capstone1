@@ -1,13 +1,13 @@
 (function(){
   'use strict';
 
-  angular.module('mean-template')
+  angular.module('capstone1')
   .controller('HomeCtrl', ['$scope', '$interval', 'Home', function($scope, $interval, Home){
     Home.getMessage().then(function(response){
-      $scope.mean = response.data.mean;
+      $scope.msg = response.data.msg;
 
       $interval(function(){
-        $scope.mean = _.shuffle($scope.mean);
+        $scope.msg = _.shuffle($scope.msg);
       }, 500);
     });
   }]);

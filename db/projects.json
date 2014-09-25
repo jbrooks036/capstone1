@@ -1,0 +1,65 @@
+{
+    "_id" : {"$oid":"53fccfe044baeee9161e7dfa"},
+    "name" : "run marathon",
+    "due" : {"$date":"2014-08-30T00:00:00.000Z"},
+    "tags" : [ 
+        "fun", 
+        " exercise"
+    ],
+    "userId" : {"$oid":"000000000000000000000001"}
+}
+
+{
+    "_id" : {"$oid":"53fcd11f44baeee9161e7dfb"},
+    "name" : "run marathon",
+    "due" : {"$date":"2014-08-30T00:00:00.000Z"},
+    "tags" : [ 
+        "fun", 
+        " exercise"
+    ],
+    "userId" : {"$oid":"000000000000000000000002"}
+}
+
+{
+    "_id" : {"$oid":"53fcd13e44baeee9161e7dfc"},
+    "name" : "run marathon",
+    "due" : {"$date":"2014-08-29T00:00:00.000Z"},
+    "tags" : [ 
+        "a", 
+        "b ", 
+        " c"
+    ],
+    "userId" : {"$oid":"000000000000000000000003"}
+}
+
+{
+    "_id" : {"$oid":"53fcd1f244baeee9161e7dfd"},
+    "name" : "paint house",
+    "due" : {"$date":"2014-08-30T00:00:00.000Z"},
+    "tags" : [ 
+        "a", 
+        "b ", 
+        " c"
+    ],
+    "userId" : {"$oid":"000000000000000000000001"}
+}
+
+{
+    "_id" : {"$oid":"53fcd9a295fc945e1811f609"},
+    "name" : "",
+    "due" : {"$date":"1970-01-01T00:00:00.000Z"},
+    "tags" : [ 
+        ""
+    ],
+    "userId" : {"$oid":"000000000000000000000002"}
+}
+
+{
+    "_id" : {"$oid":"53fcdd17ec67184b19597314"},
+    "name" : "bake cake",
+    "due" : {"$date":"2014-09-03T00:00:00.000Z"},
+    "tags" : [ 
+        "g"
+    ],
+    "userId" : {"$oid":"000000000000000000000003"}
+}

@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  angular.module('mean-template')
+  angular.module('capstone1')
   .factory('HttpInterceptor', ['$rootScope', '$location', '$q', function($rootScope, $location, $q){
 
     function responseError(res){
