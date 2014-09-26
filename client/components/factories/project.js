@@ -4,17 +4,13 @@
   angular.module('capstone1')
   .factory('Project', ['$http', function($http){
 
-    function create(project){
-      return $http.post('/projects', project);
-    }
-
     function all(){
       return $http.get('/projects').then(function(projectsResponse){
       //  return $http.get('/priorities').then(function(prioritiesResponse){
       var projects = projectsResponse.data.projects;
-      console.log('factory all() >>>>>>>>> projects: ', projects);
+      console.log('factory project.all() >>>>>>>>> projects: ', projects);
 /*
-              // var priorities = prioritiesResponse.data.priorities;
+          // var priorities = prioritiesResponse.data.priorities;
 
           projects = projects.map(function(t){
             var priority = _.find(priorities, function(p){return p._id === t.priorityId;});
@@ -28,7 +24,7 @@
       });
     }
 
-    return {create:create, all:all};
+    return {all:all};
   }]);
 })();
 
