@@ -16,12 +16,6 @@
       $scope.projects = projects;
     });
 
-    $scope.add = function(){
-      Project.create($scope.project).then(function(response){
-        $scope.projects.push(response.data.project);
-        $scope.project = {};
-      });
-    };
   }]);
 })();
 
