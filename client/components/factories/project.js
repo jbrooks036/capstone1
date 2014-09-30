@@ -4,6 +4,15 @@
   angular.module('capstone1')
   .factory('Project', ['$http', function($http){
 
+    function create(project){
+      console.log('client-factory-create>>>>>>>>>>>>project: ', project);
+      return $http.post('/projects', project);
+    }
+
+    function all(){
+      return $http.get('/projects');
+    }
+/*
     function all(){
       return $http.get('/projects').then(function(projectsResponse){
       //  return $http.get('/priorities').then(function(prioritiesResponse){
@@ -18,13 +27,12 @@
             return t;
           });
 
-*/
           return projects;
 //        });
       });
     }
-
-    return {all:all};
+*/
+    return {all:all, create:create};
   }]);
 })();
 

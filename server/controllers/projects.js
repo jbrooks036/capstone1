@@ -10,4 +10,11 @@ exports.index = function(req, res){
   });
 };
 
+exports.create = function(req, res){
+  console.log('server-controller-create >>>>>>>> req.user._id: ', req.user._id);
+  console.log('server-controller-create >>>>>>>> req.body: ', req.body);
+    Project.create(req.body, req.user._id, function(err, project){
+      res.send({project:project});
+  });
+};
 
