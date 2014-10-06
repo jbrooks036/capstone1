@@ -18,3 +18,20 @@ exports.create = function(req, res){
   });
 };
 
+exports.show = function(req, res){
+  console.log('server-controller-show >>>>>>>> req.project._id: ', req.project._id);
+  Project.findByProjectId(req.params._id, function(err, project){
+    console.log('server-controller-show >>>>>>>> project: ', project);
+    res.send({project:project});
+  });
+};
+
+/*
+exports.deleteProject = function(req, res){
+  var _id = Mongo.ObjectID(req.params.id);
+  Project.collection.remove({_id:_id}, true, function(err, result){
+    res.send({result:result});
+  });
+};
+*/
+

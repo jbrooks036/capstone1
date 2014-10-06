@@ -34,7 +34,7 @@
 
 {
     "_id" : {"$oid":"53fcd1f244baeee9161e7dfd"},
-    "name" : "paint house",
+    "name" : "Genre Authority",
     "due" : {"$date":"2014-08-30T00:00:00.000Z"},
     "tags" : [ 
         "a", 
@@ -46,20 +46,20 @@
 
 {
     "_id" : {"$oid":"53fcd9a295fc945e1811f609"},
-    "name" : "",
+    "name" : "Institutional Influence - Lit Review",
     "due" : {"$date":"1970-01-01T00:00:00.000Z"},
     "tags" : [ 
         ""
     ],
-    "userId" : {"$oid":"000000000000000000000002"}
+    "userId" : {"$oid":"000000000000000000000001"}
 }
 
 {
     "_id" : {"$oid":"53fcdd17ec67184b19597314"},
-    "name" : "bake cake",
+    "name" : "Presentations as Rites",
     "due" : {"$date":"2014-09-03T00:00:00.000Z"},
     "tags" : [ 
         "g"
     ],
-    "userId" : {"$oid":"000000000000000000000003"}
+    "userId" : {"$oid":"000000000000000000000001"}
 }

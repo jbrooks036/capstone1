@@ -36,7 +36,8 @@ Project.findByProjectIdAndUserId = function(projectId, userId, cb){
   });
 };
 
-Project.findById = function(id, cb){
+Project.findByProjectId = function(id, cb){
+  console.log(' model - findByProjectId >>>>>>>>>>> id: ', id);
   var _id = Mongo.ObjectID(id);
   Project.collection.findOne({_id:_id}, cb);
 };

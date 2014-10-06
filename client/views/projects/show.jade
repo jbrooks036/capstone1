@@ -1,0 +1,22 @@
+h3 Show Project Page!
+
+.row
+  .col-xs-9
+    .panel.panel-default
+      .panel-body
+        table.table.table-bordered
+          thead
+            tr
+              // th Complete?
+              th Name
+              th Due
+          tbody
+            tr
+              // td: input(type='checkbox', ng-model='project.isComplete')
+              td {{project.name}}
+              td {{project.due | date}}
+
+.row
+  .col-xs-3.col-xs-offset-9
+   // button.btn(ng-click='toggleProject()', ng-hide='showProject') Edit Project
+   // button.btn.btn-danger(ng-click='deleteProject(project._id)'): a(href='/#/projects') Delete Project
