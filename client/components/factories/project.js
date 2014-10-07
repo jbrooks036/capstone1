@@ -32,14 +32,25 @@
       // .xhr(funtion(xhr){xhr.upload.addeventListener(...)})
     }
 
-    /*
-    function show(projectId){
-      console.log('client-factory-show >>>>>>>>>> projectId: ', projectId);
+    function findByProjectId(projectId){
+      console.log('client-factory-findByProjectId >>>>>>>>>> projectId: ', projectId);
       return $http.get('/projects/' + projectId);
     }
-    */
 
-    return {all:all, create:create, addProjectWithFiles:addProjectWithFiles};
+    function updateProject(project, files){
+      // prevents errors if no file is selected
+      var file = files ? files[0] : null;
+      return $upload.upload({
+        url: '/projects/:id',
+        method: 'POST',
+        withCredentials: true,
+        data: {project: project},
+        file: file,
+        fileName: 'doc.jpg'
+      });
+    }
+
+    return {all:all, create:create, findByProjectId:findByProjectId, updateProject:updateProject, addProjectWithFiles:addProjectWithFiles};
   }]);
 })();
 

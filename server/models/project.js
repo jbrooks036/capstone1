@@ -52,7 +52,8 @@ module.exports = Project;
 
 function stashDoc(projectId, files){
 
-  // this returns an empty file if no file is in the files object
+  // stashes uploaded file into assets/docs directory w/ project ID as name,
+  // returns an empty file if no file is in the files object
   if(files.file){
     var tempPath  = files.file[0].path,
         relDir    = '/assets/docs/',
@@ -62,9 +63,6 @@ function stashDoc(projectId, files){
         absPath   = absDir + name,
         relPath   = relDir + name;
 
-    console.log('stashDoc >>>>>>>>>>>>> tempPath: ', tempPath);
-    console.log('stashDoc >>>>>>>>>>>>> absPath: ', absPath);
-    console.log('stashDoc >>>>>>>>>>>>> relPath: ', relPath);
     fs.renameSync(tempPath, absPath);
     return relPath;
   }else{

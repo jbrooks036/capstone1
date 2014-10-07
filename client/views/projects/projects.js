@@ -8,6 +8,7 @@
     $scope.project = {};
     $scope.projects = [];
 
+    // set up for Add Project
     $scope.addProject = function(){
       console.log('client-projects.js >>>>>>>>>>');
       // Project.create($scope.project).then(function(response){
@@ -24,6 +25,7 @@
       $scope.files = $files;
     };
 
+    // set up for Index of Projects
     Project.all().then(function(response){
       console.log('client-controller-all >>>>>>>>>>>>response: ', response);
       console.log('client-controller-all >>>>>>>>>>>>$routeParams: ', $routeParams);
@@ -43,6 +45,21 @@
       }
       // debugger;
     });
+
+    // set up for Update Project (on Show page)
+    $scope.toggleProject = function(){
+      $scope.showProject = !!!$scope.showProject;
+    };
+
+    $scope.update = function(){
+      Project.updateProject($scope.project, $scope.files).then(function(response){
+        $scope.toggleProject();
+        // reload page so that updated photo is displayed
+        // $window.location.reload();
+      });
+    };
+
+
 
 /*
     $scope.deleteProject = function(projectId){
