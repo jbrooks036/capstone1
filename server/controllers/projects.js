@@ -48,6 +48,21 @@ exports.show = function(req, res){
   });
 };
 
+exports.update = function(req, res){
+  var form = new mp.Form();
+  form.parse(req, function(err, fields, file){
+    // put fields into a format that is easier to work with
+    var projectInfo = JSON.parse(fields.project[0]);
+
+    Project.findById(projectInfo._id, function(err, project){
+      project.save(projectInfo, file, function(err, project){
+        res.send({project:project});
+      });
+    });
+  });
+};
+
+
 /*
 exports.deleteProject = function(req, res){
   var _id = Mongo.ObjectID(req.params.id);

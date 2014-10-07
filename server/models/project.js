@@ -46,6 +46,43 @@ Project.findByProjectId = function(id, cb){
   Project.collection.findOne({_id:_id}, cb);
 };
 
+/*  To be fixed for Projects *****
+Contact.findContacts = function(userId, cb){
+  Contact.collection.find({ownerId:userId}).toArray(cb);
+};
+
+Contact.findById = function(id, cb){
+  var _id = Mongo.ObjectID(id);
+  Contact.collection.findOne({_id:_id}, function(err, obj){
+    var contact = Object.create(Contact.prototype);
+    contact = _.extend(contact, obj);
+    cb(err, contact);
+  });
+};
+
+Contact.prototype.save = function(fields, file, cb){
+  var properties  = Object.keys(fields),
+    self          = this;
+
+  properties.forEach(function(property){
+    switch(property){
+      case 'photo':
+        var newPhoto = stashPhoto(file, self._id);
+        self.photo = newPhoto ? newPhoto : self.photo;
+        break;
+      default:
+        self[property] = fields[property];
+    }
+  });
+
+  this._id      = Mongo.ObjectID(this._id);
+  this.ownerId  = Mongo.ObjectID(this.ownerId);
+  this.bday     = (this.bday) ? (new Date(this.bday)) : null;
+
+  Contact.collection.save(this, cb);
+};
+
+*/
 module.exports = Project;
 
 // HELPER FUNCTION
