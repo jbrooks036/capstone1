@@ -32,5 +32,10 @@ User.login = function(o, cb){
   });
 };
 
+User.findAll = function(cb){
+  User.collection.find().toArray(cb);
+};
+
+
 module.exports = User;
 

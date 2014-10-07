@@ -1,6 +1,9 @@
 'use strict';
 
-var Project = require('../models/project');
+var Project = require('../models/project'),
+    // Mongo   = require('mongodb'),
+    mp      = require('multiparty');
+
 
 exports.index = function(req, res){
   console.log('server-controller-index >>>>>>>> req.user._id: ', req.user._id);
@@ -10,11 +13,30 @@ exports.index = function(req, res){
   });
 };
 
+/*
 exports.create = function(req, res){
   console.log('server-controller-create >>>>>>>> req.user._id: ', req.user._id);
   console.log('server-controller-create >>>>>>>> req.body: ', req.body);
     Project.create(req.body, req.user._id, function(err, project){
       res.send({project:project});
+  });
+};
+*/
+
+exports.create = function(req, res){
+  console.log('server-controller-create >>>>>>>> req.user._id: ', req.user._id);
+  console.log('server-controller-create >>>>>>>> req.body: ', req.body);
+  var form = new mp.Form();
+  form.parse(req, function(err, fields, files){
+  console.log('server-controller-create >>>>>>>> fields: ', fields);
+  console.log('server-controller-create >>>>>>>> files: ', files);
+    var projectInfo2 = fields.project[0],
+        projectInfo = JSON.parse(projectInfo2);
+    Project.create(req.user._id, projectInfo, files, function(err, success, project){
+      Project.findByProjectId(project.upserted[0]._id, function(err, project){
+        res.send({project:project});
+      });
+    });
   });
 };
 

@@ -5,7 +5,7 @@
   .factory('Home', ['$http', function($http){
 
     function getMessage(){
-      return $http.get('/home');
+      return $http.get('/users');
     }
 
     return {getMessage:getMessage};

@@ -10,4 +10,8 @@ h3 New Project Page!
         label(for='due') Due
         input.form-control#due(name='due', type='date', ng-model='project.due', required)
       .form-group
+        label(for='doc') Document
+        input(type='file', ng-file-select='onFileSelect($files)', ng-model='contact.doc')
+
+      .form-group
         button.btn.btn-success(ng-show='projectForm.$valid', ng-click='addProject()') Add Project

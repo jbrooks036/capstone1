@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('capstone1')
-  .controller('ProjectsCtrl', ['$scope', '$interval', '$location', 'Project', '$routeParams', function($scope, $interval, $location, Project, $routeParams){
+  .controller('ProjectsCtrl', ['$scope', '$upload', '$location', 'Project', '$routeParams', function($scope, $upload, $location, Project, $routeParams){
 
     $scope.sort = 'name';
     $scope.project = {};
@@ -10,12 +10,18 @@
 
     $scope.addProject = function(){
       console.log('client-projects.js >>>>>>>>>>');
-      Project.create($scope.project).then(function(response){
+      // Project.create($scope.project).then(function(response){
+      Project.addProjectWithFiles($scope.project, $scope.files).then(function(response){
       console.log('client-projects.js >>>>>>>>>> response: ', response);
-        $scope.projects.push(response.data.project);
+        $scope.project = response.data.project;
+        $scope.projects.push($scope.project);
         $scope.project = {};
         $location.path('/projects');
       });
+    };
+
+    $scope.onFileSelect = function($files){
+      $scope.files = $files;
     };
 
     Project.all().then(function(response){
@@ -23,6 +29,8 @@
       console.log('client-controller-all >>>>>>>>>>>>$routeParams: ', $routeParams);
       $scope.projects = response.data.projects;
       console.log('client-controller-all >>>>>>>>>>>>$scope.projects: ', $scope.projects);
+
+      // set up for Show Project
       if ($routeParams.projectId) {
         for (var i = 0; i < $scope.projects.length; i++) {
           if ($scope.projects[i]._id === $routeParams.projectId) {

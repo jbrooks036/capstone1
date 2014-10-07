@@ -35,3 +35,9 @@ exports.logout = function(req, res){
   });
 };
 
+exports.index = function(req, res){
+  User.findAll(function(err, users){
+    console.log('server-user-controller-index >>>>>>>> users: ', users);
+    res.send({users:users});
+  });
+};

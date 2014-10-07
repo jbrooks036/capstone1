@@ -2,21 +2,25 @@
 
 var // bcrypt = require('bcrypt'),
     _      = require('lodash'),
+    fs     = require('fs'),
+    path   = require('path'),
     Mongo  = require('mongodb');
 
-function Project(o, userId){
-  this.name   = o.name;
-  this.due    = new Date(o.due);
-//  this.tags   = o.tags.split(',');
+function Project(userId, projectInfo, files){
+  this._id    = new Mongo.ObjectID();
   this.userId = userId;
+  this.name   = projectInfo.name;
+  this.due    = new Date(projectInfo.due);
+  this.doc    = stashDoc(this._id, files);
+//  this.tags   = o.tags.split(',');
 }
 
 Object.defineProperty(Project, 'collection', {
   get: function(){return global.mongodb.collection('projects');}
 });
 
-Project.create = function(o,userId, cb){
-  var p = new Project(o, userId);
+Project.create = function(userId, fields, files, cb){
+  var p = new Project(userId, fields, files);
   Project.collection.save(p, cb);
 };
 
@@ -43,4 +47,29 @@ Project.findByProjectId = function(id, cb){
 };
 
 module.exports = Project;
+
+// HELPER FUNCTION
+
+function stashDoc(projectId, files){
+
+  // this returns an empty file if no file is in the files object
+  if(files.file){
+    var tempPath  = files.file[0].path,
+        relDir    = '/assets/docs/',
+        absDir    = __dirname + '/../../public' + relDir,
+        ext       = path.extname(tempPath),
+        name      = projectId + ext,
+        absPath   = absDir + name,
+        relPath   = relDir + name;
+
+    console.log('stashDoc >>>>>>>>>>>>> tempPath: ', tempPath);
+    console.log('stashDoc >>>>>>>>>>>>> absPath: ', absPath);
+    console.log('stashDoc >>>>>>>>>>>>> relPath: ', relPath);
+    fs.renameSync(tempPath, absPath);
+    return relPath;
+  }else{
+    return ('/assets/docs/emptyFile.docx');
+  }
+}
+
 

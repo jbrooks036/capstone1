@@ -1,7 +1,7 @@
 (function(){
   'use strict';
 
-  angular.module('capstone1', ['ngRoute', 'LocalForageModule'])
+  angular.module('capstone1', ['ngRoute', 'LocalForageModule', 'angularFileUpload'])
   .config(['$routeProvider', '$httpProvider', '$localForageProvider', function($routeProvider, $httpProvider, $localForageProvider){
     $routeProvider
     .when('/', {templateUrl:'/views/home/home.html', controller:'HomeCtrl'})
