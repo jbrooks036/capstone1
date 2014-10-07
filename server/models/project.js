@@ -7,7 +7,7 @@ var // bcrypt = require('bcrypt'),
 function Project(o, userId){
   this.name   = o.name;
   this.due    = new Date(o.due);
-  this.tags   = o.tags.split(',');
+//  this.tags   = o.tags.split(',');
   this.userId = userId;
 }
 
@@ -15,8 +15,8 @@ Object.defineProperty(Project, 'collection', {
   get: function(){return global.mongodb.collection('projects');}
 });
 
-Project.create = function(o, cb){
-  var p = new Project(o);
+Project.create = function(o,userId, cb){
+  var p = new Project(o, userId);
   Project.collection.save(p, cb);
 };
 
@@ -36,7 +36,8 @@ Project.findByProjectIdAndUserId = function(projectId, userId, cb){
   });
 };
 
-Project.findById = function(id, cb){
+Project.findByProjectId = function(id, cb){
+  console.log(' model - findByProjectId >>>>>>>>>>> id: ', id);
   var _id = Mongo.ObjectID(id);
   Project.collection.findOne({_id:_id}, cb);
 };
