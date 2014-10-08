@@ -13,6 +13,7 @@
     }
 
     function logout(){
+      console.log('client-user-factory-logout >>>>>>>>>>>');
       return $http.delete('/logout');
     }
 

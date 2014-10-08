@@ -29,6 +29,7 @@ exports.login = function(req, res){
 };
 
 exports.logout = function(req, res){
+  console.log('server-user-controller-logout >>>>>>>>>>>  req.session: ', req.session);
   req.session.destroy(function(){
     res.setHeader('X-Authenticated-User', 'anonymous');
     res.status(200).end();

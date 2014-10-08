@@ -3,8 +3,8 @@
     "name" : "Situational Genre",
     "due" : {"$date":"2015-01-01T00:00:00.000Z"},
     "tags" : [ 
-        "fun", 
-        " exercise"
+        "social interaction", 
+        "communicative genres"
     ],
     "collaborators" : [{"$oid":"000000000000000000000001"}]
 }
@@ -14,8 +14,9 @@
     "name" : "Making Virtual Worlds Real",
     "due" : {"$date":"2014-08-30T00:00:00.000Z"},
     "tags" : [ 
-        "fun", 
-        " exercise"
+        "social media",
+        "Goffman",
+        "social interaction"
     ],
     "collaborators" : [{"$oid":"000000000000000000000002"}]
 }
@@ -27,7 +28,7 @@
     "tags" : [ 
         "a", 
         "b ", 
-        " c"
+        "c "
     ],
     "collaborators" : [{"$oid":"000000000000000000000003"}]
 }
@@ -39,7 +40,7 @@
     "tags" : [ 
         "a", 
         "b ", 
-        " c"
+        "c "
     ],
     "collaborators" : [{"$oid":"000000000000000000000001"}]
 }

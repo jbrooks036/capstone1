@@ -36,10 +36,10 @@
 
     // Add New Project
     $scope.addProject = function(){
-      console.log('client-projects.js >>>>>>>>>>');
-      // Project.create($scope.project).then(function(response){
+      console.log('client-projects-controller-addProject >>>>>>>>>>$scope.project: ', $scope.project);
+      console.log('client-projects-controller-addProject >>>>>>>>>>$scope.files: ', $scope.files);
       Project.addProjectWithFiles($scope.project, $scope.files).then(function(response){
-      console.log('client-projects.js >>>>>>>>>> response: ', response);
+      console.log('client-projects-controller-addProject >>>>>>>>>> response: ', response);
         $scope.project = response.data.project;
         $scope.projects.push($scope.project);
         $scope.project = {};

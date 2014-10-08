@@ -7,12 +7,13 @@ var // bcrypt = require('bcrypt'),
     Mongo  = require('mongodb');
 
 function Project(userId, projectInfo, files){
-  this._id    = new Mongo.ObjectID();
+  this._id           = new Mongo.ObjectID();
+  this.name          = projectInfo.name;
+  this.due           = new Date(projectInfo.due);
+  this.doc           = stashDoc(this._id, files);
   this.collaborators = [];
-  this.collaborators.push(userId);
-  this.name   = projectInfo.name;
-  this.due    = new Date(projectInfo.due);
-  this.doc    = stashDoc(this._id, files);
+  this.collaborators.push(Mongo.ObjectID(userId));
+  this.collaborators.push(Mongo.ObjectID(projectInfo.collaborators));
 //  this.tags   = o.tags.split(',');
   console.log('server-Project-constructor >>>>>>>>>>>>>> new project: ', this);
 }
@@ -36,19 +37,9 @@ Project.findAllByUserId = function(userId, cb){
   });
 };
 
+Project.prototype.collaborators = function(cb){
 
-/*  NOT SURE THIS FUNCTION IS NEEDED/USED??
-Project.findByProjectIdAndUserId = function(projectId, userId, cb){
-  var _id = Mongo.ObjectID(projectId);
-  Project.collection.findOne({_id:_id, userId:userId}, function(err, obj){
-    if(obj){
-      cb(err, _.create(Project.prototype, obj));
-    }else{
-      cb();
-    }
-  });
 };
-*/
 
 Project.findByProjectId = function(id, cb){
   console.log(' model - findByProjectId >>>>>>>>>>> id: ', id);

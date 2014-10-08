@@ -5,7 +5,7 @@
   .factory('Project', ['$http', '$upload', function($http, $upload){
 
     function create(project){
-      console.log('client-factory-create>>>>>>>>>>>>project: ', project);
+      console.log('client-project-factory-create>>>>>>>>>>>>project: ', project);
       return $http.post('/projects', project);
     }
 
@@ -33,7 +33,7 @@
     }
 
     function findByProjectId(projectId){
-      console.log('client-factory-findByProjectId >>>>>>>>>> projectId: ', projectId);
+      console.log('client-project-factory-findByProjectId >>>>>>>>>> projectId: ', projectId);
       return $http.get('/projects/' + projectId);
     }
 
