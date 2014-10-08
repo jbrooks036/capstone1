@@ -8,10 +8,15 @@ h3 New Project Page!
         input.form-control#name(name='name', type='text', ng-model='project.name', required, ng-minlength='3', autofocus)
       .form-group
         label(for='due') Due
-        input.form-control#due(name='due', type='date', ng-model='project.due', required)
+        input.form-control#due(name='due', type='date', ng-model='project.due')
       .form-group
         label(for='doc') Document
-        input(type='file', ng-file-select='onFileSelect($files)', ng-model='contact.doc')
+        input(type='file', ng-file-select='onFileSelect($files)', ng-model='project.doc')
+      .form-group
+        label(for='collaboratorId') Collaborators
+        select.form-control(name='collaboratorId', ng-model='project.collaborators', ng-options='u._id as u.email for u in users | orderBy:"email"')
+          option(value='') Select Collaborator
+
 
       .form-group
         button.btn.btn-success(ng-show='projectForm.$valid', ng-click='addProject()') Add Project

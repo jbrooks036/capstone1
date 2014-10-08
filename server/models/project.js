@@ -8,11 +8,13 @@ var // bcrypt = require('bcrypt'),
 
 function Project(userId, projectInfo, files){
   this._id    = new Mongo.ObjectID();
-  this.userId = userId;
+  this.collaborators = [];
+  this.collaborators.push(userId);
   this.name   = projectInfo.name;
   this.due    = new Date(projectInfo.due);
   this.doc    = stashDoc(this._id, files);
 //  this.tags   = o.tags.split(',');
+  console.log('server-Project-constructor >>>>>>>>>>>>>> new project: ', this);
 }
 
 Object.defineProperty(Project, 'collection', {
@@ -26,9 +28,16 @@ Project.create = function(userId, fields, files, cb){
 
 Project.findAllByUserId = function(userId, cb){
   console.log(' model - findAllByUserId >>>>>>>>>>> userId: ', userId);
-    Project.collection.find({userId:userId}).toArray(cb);
+  Project.collection.find({collaborators: userId}).toArray(function(err, projects){
+    for(var i = 0; i < projects.length; i++) {
+      projects[i] = changePrototype(projects[i]);
+    }
+    cb(err, projects);
+  });
 };
 
+
+/*  NOT SURE THIS FUNCTION IS NEEDED/USED??
 Project.findByProjectIdAndUserId = function(projectId, userId, cb){
   var _id = Mongo.ObjectID(projectId);
   Project.collection.findOne({_id:_id, userId:userId}, function(err, obj){
@@ -39,6 +48,7 @@ Project.findByProjectIdAndUserId = function(projectId, userId, cb){
     }
   });
 };
+*/
 
 Project.findByProjectId = function(id, cb){
   console.log(' model - findByProjectId >>>>>>>>>>> id: ', id);
@@ -46,7 +56,7 @@ Project.findByProjectId = function(id, cb){
   Project.collection.findOne({_id:_id}, cb);
 };
 
-/*  To be fixed for Projects *****
+/*  To be transformed for Project Update *****
 Contact.findContacts = function(userId, cb){
   Contact.collection.find({ownerId:userId}).toArray(cb);
 };
@@ -85,7 +95,7 @@ Contact.prototype.save = function(fields, file, cb){
 */
 module.exports = Project;
 
-// HELPER FUNCTION
+// PRIVATE HELPER FUNCTIONS
 
 function stashDoc(projectId, files){
 
@@ -105,6 +115,11 @@ function stashDoc(projectId, files){
   }else{
     return ('/assets/docs/emptyFile.docx');
   }
+}
+
+function changePrototype(proj){
+  proj = _.create(Project.prototype, proj);
+  return proj;
 }
 
 

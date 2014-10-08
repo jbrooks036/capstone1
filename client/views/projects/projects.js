@@ -2,28 +2,16 @@
   'use strict';
 
   angular.module('capstone1')
-  .controller('ProjectsCtrl', ['$scope', '$upload', '$location', 'Project', '$routeParams', function($scope, $upload, $location, Project, $routeParams){
+  .controller('ProjectsCtrl', ['$scope', '$upload', '$location', 'Project', 'User', '$routeParams', function($scope, $upload, $location, Project, User, $routeParams){
 
+    // set $scope's
     $scope.sort = 'name';
     $scope.project = {};
     $scope.projects = [];
-
-    // set up for Add Project
-    $scope.addProject = function(){
-      console.log('client-projects.js >>>>>>>>>>');
-      // Project.create($scope.project).then(function(response){
-      Project.addProjectWithFiles($scope.project, $scope.files).then(function(response){
-      console.log('client-projects.js >>>>>>>>>> response: ', response);
-        $scope.project = response.data.project;
-        $scope.projects.push($scope.project);
-        $scope.project = {};
-        $location.path('/projects');
-      });
-    };
-
-    $scope.onFileSelect = function($files){
-      $scope.files = $files;
-    };
+    User.all().then(function(response){
+      console.log('client-controller >>>>>>>>>>>>>>>>>> User.all-response: ', response.data);
+      $scope.users = response.data.users;
+    });
 
     // set up for Index of Projects
     Project.all().then(function(response){
@@ -45,6 +33,23 @@
       }
       // debugger;
     });
+
+    // Add New Project
+    $scope.addProject = function(){
+      console.log('client-projects.js >>>>>>>>>>');
+      // Project.create($scope.project).then(function(response){
+      Project.addProjectWithFiles($scope.project, $scope.files).then(function(response){
+      console.log('client-projects.js >>>>>>>>>> response: ', response);
+        $scope.project = response.data.project;
+        $scope.projects.push($scope.project);
+        $scope.project = {};
+        $location.path('/projects');
+      });
+    };
+
+    $scope.onFileSelect = function($files){
+      $scope.files = $files;
+    };
 
     // set up for Update Project (on Show page)
     $scope.toggleProject = function(){

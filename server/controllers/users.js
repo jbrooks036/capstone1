@@ -36,6 +36,7 @@ exports.logout = function(req, res){
 };
 
 exports.index = function(req, res){
+  console.log('server-user-controller-index >>>>>>>> req.session: ', req.session);
   User.findAll(function(err, users){
     console.log('server-user-controller-index >>>>>>>> users: ', users);
     res.send({users:users});
