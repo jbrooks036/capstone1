@@ -62,6 +62,10 @@ exports.update = function(req, res){
   });
 };
 
+exports.findCollaboratorsByUserId = function (req, res){
+  // *** this needs to be written
+        res.send({collaborators:collaborators});
+};
 
 /*
 exports.deleteProject = function(req, res){

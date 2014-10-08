@@ -37,24 +37,34 @@ Project.findAllByUserId = function(userId, cb){
   });
 };
 
+Project.prototype.collaborators = function(cb){
+
+};
+
+/*
+Room.prototype.isBedroom = function(){
+  return this.name === 'Bed';
+};
+
+Object.defineProperty(Task, 'collection', {
+  get: function(){return global.mongodb.collection('tasks');}
+});
+
+GETTER E.G.:
+
+  var o = { a:0 }
+
+  Object.defineProperty(o, "b", { get: function () { return this.a + 1; } });
+
+  console.log(o.b) // Runs the getter, which yields a + 1 (which is 1)
+
+*/
+
 Project.findByProjectId = function(id, cb){
   console.log(' model - findByProjectId >>>>>>>>>>> id: ', id);
   var _id = Mongo.ObjectID(id);
   Project.collection.findOne({_id:_id}, cb);
 };
-
-Project.prototype.findCollaboratorsByUserId = function(userId, cb){
-  console.log(' model - findCollaboratorsByProjectId >>>>>>>>>>> userId: ', userId);
-  var _id = Mongo.ObjectID(userId);
-  // **** this next line needs to be changed
-  Project.collection.findOne({_id:_id}, cb);
-};
-
-/*
-Project.prototype.collaborators = function(){
-  return this.collaborators
-};
-*/
 
 /*  To be transformed for Project Update *****
 Contact.findContacts = function(userId, cb){
