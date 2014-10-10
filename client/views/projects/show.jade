@@ -10,11 +10,15 @@ h3 Show Project Page!
               // th Complete?
               th Name
               th Due
+              th Collaborators
+              th Documents
           tbody
             tr
               // td: input(type='checkbox', ng-model='project.isComplete')
               td {{project.name}}
               td {{project.due | date}}
+              td {{project.researchers}}
+              td {{project.doc}}
   .col-xs-3
 
 .row
@@ -24,13 +28,18 @@ h3 Show Project Page!
   .col-xs-9
 
 .row
-  .col-xs-6
+  .col-xs-12
     form(novalidate, name='updateForm', role='form', ng-show='showProject')
       .row
-        .col-xs-6
+        .col-xs-8
           .form-group
             label(for='name') Name
             input.form-control#name(name='name', type='text', ng-model='project.name', autofocus)
+          .form-group
+            label(for='collaboratorId') Collaborators
+            select.form-control(name='collaboratorId', ng-model='project.collaborator', ng-options='u._id as u.email for u in users | orderBy:"email"')
+              option(value='') Select Collaborator
+        .col-xs-4
           .form-group
             label(for='due') Due
             input.form-control#due(name='due', type='date', ng-model='project.due')
@@ -39,5 +48,3 @@ h3 Show Project Page!
             input(type='file', ng-file-select='onFileSelect($files)', ng-model='project.doc')
           .form-group
             button.btn#update(ng-click='update()') Update Project
-  .col-xs-6
-

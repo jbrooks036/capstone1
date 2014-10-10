@@ -4,6 +4,7 @@ var // bcrypt = require('bcrypt'),
     _      = require('lodash'),
     fs     = require('fs'),
     path   = require('path'),
+    User   = require('./user'),
     Mongo  = require('mongodb');
 
 function Project(userId, projectInfo, files){
@@ -11,11 +12,11 @@ function Project(userId, projectInfo, files){
   this.name          = projectInfo.name;
   this.due           = new Date(projectInfo.due);
   this.doc           = stashDoc(this._id, files);
-  this.collaborators = [];
-  this.collaborators.push(Mongo.ObjectID(userId));
-  this.collaborators.push(Mongo.ObjectID(projectInfo.collaborators));
+  this.researchers   = [];
+  this.researchers.push(Mongo.ObjectID(userId));
+  this.researchers.push(Mongo.ObjectID(projectInfo.collaborator));
 //  this.tags   = o.tags.split(',');
-  console.log('server-Project-constructor >>>>>>>>>>>>>> new project: ', this);
+//  console.log('server-Project-constructor >>>>>>>>>>>>>> new project: ', this);
 }
 
 Object.defineProperty(Project, 'collection', {
@@ -24,75 +25,64 @@ Object.defineProperty(Project, 'collection', {
 
 Project.create = function(userId, fields, files, cb){
   var p = new Project(userId, fields, files);
+  console.log('model-create >>>>>>>>>>> typeof p: ', typeof p);
   Project.collection.save(p, cb);
 };
 
 Project.findAllByUserId = function(userId, cb){
-  console.log(' model - findAllByUserId >>>>>>>>>>> userId: ', userId);
-  Project.collection.find({collaborators: userId}).toArray(function(err, projects){
+//  console.log(' model - findAllByUserId >>>>>>>>>>> userId: ', userId);
+  Project.collection.find({researchers: userId}).toArray(function(err, projects){
     for(var i = 0; i < projects.length; i++) {
       projects[i] = rePrototype(projects[i]);
+      console.log('model-findAllByUserId >>>>>>>>>>> typeof projects[i]: ', typeof projects[i]);
     }
     cb(err, projects);
   });
 };
 
-Project.findByProjectId = function(id, cb){
-  console.log(' model - findByProjectId >>>>>>>>>>> id: ', id);
-  var _id = Mongo.ObjectID(id);
-  Project.collection.findOne({_id:_id}, cb);
-};
-
-Project.prototype.findCollaboratorsByUserId = function(userId, cb){
-  console.log(' model - findCollaboratorsByProjectId >>>>>>>>>>> userId: ', userId);
-  var _id = Mongo.ObjectID(userId);
-  // **** this next line needs to be changed
-  Project.collection.findOne({_id:_id}, cb);
-};
-
-/*
-Project.prototype.collaborators = function(){
-  return this.collaborators
-};
-*/
-
-/*  To be transformed for Project Update *****
-Contact.findContacts = function(userId, cb){
-  Contact.collection.find({ownerId:userId}).toArray(cb);
-};
-
-Contact.findById = function(id, cb){
-  var _id = Mongo.ObjectID(id);
-  Contact.collection.findOne({_id:_id}, function(err, obj){
-    var contact = Object.create(Contact.prototype);
-    contact = _.extend(contact, obj);
-    cb(err, contact);
+// Dave Boling says this function is never called!!
+Project.findByProjectId = function(projId, userId, cb){
+  console.log('model-findByProjectId >>>>>>>>>>> userId: ', userId);
+  console.log('model-findByProjectId >>>>>>>>>>> projId: ', projId);
+  // this will be changed to include async.map for > 1 collaborators
+  var _id = Mongo.ObjectID(projId);
+  Project.collection.findOne({_id:_id}, function(err, obj){
+    console.log('model-findByProjectId >>>>>>>>>>> obj: ', obj);
+    //var collaborators = _.without(project.researchers, userId);
+    //console.log(' model - findByProjectId >>>>>>>>>>> collaborators: ', collaborators);
+    var proj = rePrototype(obj);
+    console.log('model-findByProjectId >>>>>>>>>>> proj: ', proj);
+    console.log('model-findByProjectId >>>>>>>>>>> typeof proj: ', typeof proj);
+    cb(proj);
   });
 };
 
-Contact.prototype.save = function(fields, file, cb){
+Project.prototype.save = function(fields, file, cb){
+  console.log('model-project-save >>>>>>>>>> fields: ', fields);
+  console.log('model-project-save >>>>>>>>>> file: ', file);
   var properties  = Object.keys(fields),
     self          = this;
 
   properties.forEach(function(property){
+    console.log('s-project-controller-save >>>>>>>>> property: ', property);
     switch(property){
-      case 'photo':
-        var newPhoto = stashPhoto(file, self._id);
-        self.photo = newPhoto ? newPhoto : self.photo;
+      case 'collaborator':
+        self.researchers.push(fields.collaborator);
+        break;
+      case 'doc':
+        var newDoc = stashDoc(file, self._id);
+        self.doc = newDoc ? newDoc : self.doc;
         break;
       default:
         self[property] = fields[property];
     }
   });
 
-  this._id      = Mongo.ObjectID(this._id);
-  this.ownerId  = Mongo.ObjectID(this.ownerId);
-  this.bday     = (this.bday) ? (new Date(this.bday)) : null;
+  this._id = Mongo.ObjectID(this._id);
 
-  Contact.collection.save(this, cb);
+  Project.collection.save(this, cb);
 };
 
-*/
 module.exports = Project;
 
 // PRIVATE HELPER FUNCTIONS
@@ -118,7 +108,9 @@ function stashDoc(projectId, files){
 }
 
 function rePrototype(proj){
+  console.log('model-rePrototype >>>>>>>>>>> typeof proj: ', typeof proj);
   proj = _.create(Project.prototype, proj);
+  console.log('model-rePrototype >>>>>>>>>>> typeof proj: ', typeof proj);
   return proj;
 }
 

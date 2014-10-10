@@ -2,6 +2,7 @@
 
 var Project = require('../models/project'),
     // Mongo   = require('mongodb'),
+    _       = require('lodash'),
     mp      = require('multiparty');
 
 
@@ -13,36 +14,25 @@ exports.index = function(req, res){
   });
 };
 
-/*
 exports.create = function(req, res){
-  console.log('server-controller-create >>>>>>>> req.user._id: ', req.user._id);
-  console.log('server-controller-create >>>>>>>> req.body: ', req.body);
-    Project.create(req.body, req.user._id, function(err, project){
-      res.send({project:project});
-  });
-};
-*/
-
-exports.create = function(req, res){
-  console.log('server-controller-create >>>>>>>> req.user._id: ', req.user._id);
-  console.log('server-controller-create >>>>>>>> req.body: ', req.body);
+//  console.log('server-controller-create >>>>>>>> req.user._id: ', req.user._id);
+//  console.log('server-controller-create >>>>>>>> req.body: ', req.body);
   var form = new mp.Form();
   form.parse(req, function(err, fields, files){
-  console.log('server-controller-create >>>>>>>> fields: ', fields);
-  console.log('server-controller-create >>>>>>>> files: ', files);
+//  console.log('server-controller-create >>>>>>>> fields: ', fields);
+//  console.log('server-controller-create >>>>>>>> files: ', files);
     var projectInfo2 = fields.project[0],
         projectInfo = JSON.parse(projectInfo2);
     Project.create(req.user._id, projectInfo, files, function(err, success, project){
-      Project.findByProjectId(project.upserted[0]._id, function(err, project){
-        res.send({project:project});
-      });
+      res.send({project:project});
     });
   });
 };
 
 exports.show = function(req, res){
   console.log('server-controller-show >>>>>>>> req.project._id: ', req.project._id);
-  Project.findByProjectId(req.params._id, function(err, project){
+  // req.user._id to be replaced by async.map when adding > 1 collaborator
+  Project.findByProjectId(req.params._id, req.user._id, function(err, project){
     console.log('server-controller-show >>>>>>>> project: ', project);
     res.send({project:project});
   });
@@ -53,18 +43,19 @@ exports.update = function(req, res){
   form.parse(req, function(err, fields, file){
     // put fields into a format that is easier to work with
     var projectInfo = JSON.parse(fields.project[0]);
+    console.log('server-projects-controller-update >>>>>>>> projectInfo: ', projectInfo);
 
-    Project.findById(projectInfo._id, function(err, project){
-      project.save(projectInfo, file, function(err, project){
+    Project.findByProjectId(projectInfo._id, req.user._id, function(err, project){
+      // console.log('server-projects-controller-update >>>>>>>> project: ', project);
+      // console.log('server-projects-controller-update >>>>>>>> typeof project: ', typeof project);
+      // not sure why this is necessary, but passed in project is not correctly prototyped
+      project = _.create(Project.prototype, project);
+
+      project.save(fields, file, function(){
         res.send({project:project});
       });
     });
   });
-};
-
-exports.findCollaboratorsByUserId = function (req, res){
-  // *** this needs to be written
-        res.send({collaborators:collaborators});
 };
 
 /*

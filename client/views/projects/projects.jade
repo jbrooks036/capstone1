@@ -1,7 +1,7 @@
 h3 Projects Page!
 
 .row
-  .col-xs-9
+  .col-xs-12
     .panel.panel-default
       .panel-body
         .form-group
@@ -18,10 +18,12 @@ h3 Projects Page!
               // th Complete?
               th Name
               th Due
+              th Collaborators
           tbody
             // tr(ng-repeat='p in projects | orderBy:sort', ng-class='{complete:p.isComplete}')
             tr(ng-repeat='p in projects | orderBy:sort')
               // td: input(type='checkbox', ng-model='p.isComplete')
               td: a(href='/#/projects/{{p._id}}')  {{p.name}}
               td {{p.due | date}}
+              td {{p.researchers}}
 

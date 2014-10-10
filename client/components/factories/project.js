@@ -21,8 +21,8 @@
         //headers: {'header-key': 'header-value'},
         withCredentials: true,
         data: {project: project},
-        file: file,
-        fileName: 'doc.jpg' // or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
+        file: file //,
+        // fileName: 'doc.docx' // or ['1.jpg', '2.jpg', ...] // to modify the name of the file(s)
         // customize file formData name ('Content-Disposition'), server side file variable name.
         //fileFormDataName: myFile, //or a list of names for multiple files (html5). Default is 'file'
         // customize how data is added to formData. See #40#issuecomment-28612000 for sample code
@@ -45,8 +45,8 @@
         method: 'POST',
         withCredentials: true,
         data: {project: project},
-        file: file,
-        fileName: 'doc.jpg'
+        file: file //,
+        // fileName: 'doc.jpg'
       });
     }
 

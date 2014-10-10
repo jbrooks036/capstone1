@@ -65,7 +65,7 @@
     };
 
     $scope.collaborators = function(){
-      this.findCollaboratorsByUserId($userId).then(function(response){
+      this.findCollaboratorsByUserId($scope.userId).then(function(response){
       // ***** this needs to be fixed ***
       });
     };
