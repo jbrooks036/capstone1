@@ -11,6 +11,7 @@
     User.all().then(function(response){
       console.log('client-controller >>>>>>>>>>>>>>>>>> User.all-response: ', response.data);
       $scope.users = response.data.users;
+      console.log('client-controller >>>>>>>>>>>>>>>>>> $scope.users: ', $scope.users);
     });
 
     // set up for Index of Projects

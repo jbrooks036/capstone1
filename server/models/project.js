@@ -41,6 +41,7 @@ Project.findAllByUserId = function(userId, cb){
 };
 
 // Dave Boling says this function is never called!!
+// BUT it is called for update(!)
 Project.findByProjectId = function(projId, userId, cb){
   console.log('model-findByProjectId >>>>>>>>>>> userId: ', userId);
   console.log('model-findByProjectId >>>>>>>>>>> projId: ', projId);
@@ -81,6 +82,12 @@ Project.prototype.save = function(fields, file, cb){
   this._id = Mongo.ObjectID(this._id);
 
   Project.collection.save(this, cb);
+};
+
+Project.prototype.convertUserIdsToObjects = function(cb){
+  User.findByIds(this.collaborators, function(users){
+    this.collaborators = users;
+  });
 };
 
 module.exports = Project;

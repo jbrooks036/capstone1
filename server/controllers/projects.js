@@ -51,7 +51,7 @@ exports.update = function(req, res){
       // not sure why this is necessary, but passed in project is not correctly prototyped
       project = _.create(Project.prototype, project);
 
-      project.save(fields, file, function(){
+      project.save(projectInfo, file, function(){
         res.send({project:project});
       });
     });

@@ -10,9 +10,16 @@ Object.defineProperty(User, 'collection', {
   get: function(){return global.mongodb.collection('users');}
 });
 
+// is this function needed, if next one is in use?
 User.findById = function(id, cb){
   var _id = Mongo.ObjectID(id);
   User.collection.findOne({_id:_id}, cb);
+};
+
+User.findByIds = function(ids, cb){
+  User.collection.find({_id : {$in : ids}}, function(err, users){
+    cb(users);
+  });
 };
 
 User.register = function(o, cb){
