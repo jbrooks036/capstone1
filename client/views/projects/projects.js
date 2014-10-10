@@ -58,18 +58,23 @@
     };
 
     $scope.update = function(){
+      console.log('c-projects-controller-update >>>>>>>>>> $scope.project: ', $scope.project);
+      console.log('c-projects-controller-update >>>>>>>>>> $scope.files: ', $scope.files);
       Project.updateProject($scope.project, $scope.files).then(function(response){
+      console.log('c-projects-controller-update >>>>>>>>>> response:  ', response);
         $scope.toggleProject();
-        // reload page so that updated photo is displayed
+        // reload page so that updated doc, date, etc are displayed??
         // $window.location.reload();
       });
     };
 
+/*
     $scope.collaborators = function(){
       this.findCollaboratorsByUserId($scope.userId).then(function(response){
       // ***** this needs to be fixed ***
       });
     };
+*/
 
 
 /*

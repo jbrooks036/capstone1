@@ -4,6 +4,7 @@ var // bcrypt = require('bcrypt'),
     _      = require('lodash'),
     fs     = require('fs'),
     path   = require('path'),
+    async  = require('async'),
     User   = require('./user'),
     Mongo  = require('mongodb');
 
@@ -85,10 +86,25 @@ Project.prototype.save = function(fields, file, cb){
 };
 
 Project.prototype.convertUserIdsToObjects = function(cb){
-  User.findByIds(this.collaborators, function(users){
-    this.collaborators = users;
+  async.map(this.researchers, iteratorFn, function(err, researchers){
+    console.log('s-model-project-convertUserIds2Objs >>>>>>>>>> researchers: ', researchers);
+    this.researchers = researchers;
   });
 };
+
+function iteratorFn(rId, cb){
+  User.findById(rId, cb);
+}
+
+
+
+
+ // User.findByIds(this.collaborators, function(users){
+ //   console.log('s-model-convertUserIdsToObjs >>>>>>> this: ', this);
+ //   console.log('s-model-convertUserIdsToObjs >>>>>>> users: ', users);
+ //   this.collaborators = users;
+ // });
+// };
 
 module.exports = Project;
 
@@ -115,10 +131,7 @@ function stashDoc(projectId, files){
 }
 
 function rePrototype(proj){
-  console.log('model-rePrototype >>>>>>>>>>> typeof proj: ', typeof proj);
-  proj = _.create(Project.prototype, proj);
-  console.log('model-rePrototype >>>>>>>>>>> typeof proj: ', typeof proj);
-  return proj;
+  return _.create(Project.prototype, proj);
 }
 
 

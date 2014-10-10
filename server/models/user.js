@@ -16,11 +16,14 @@ User.findById = function(id, cb){
   User.collection.findOne({_id:_id}, cb);
 };
 
+/*
 User.findByIds = function(ids, cb){
   User.collection.find({_id : {$in : ids}}, function(err, users){
+  console.log('s-U-model-findByIds >>>>>>>>> users', users);
     cb(users);
   });
 };
+*/
 
 User.register = function(o, cb){
   User.collection.findOne({email:o.email}, function(err, user){
