@@ -1,7 +1,7 @@
 'use strict';
 
 var Project = require('../models/project'),
-    // Mongo   = require('mongodb'),
+    Mongo   = require('mongodb'),
     _       = require('lodash'),
     mp      = require('multiparty');
 
@@ -59,12 +59,10 @@ exports.update = function(req, res){
   });
 };
 
-/*
 exports.deleteProject = function(req, res){
   var _id = Mongo.ObjectID(req.params.id);
   Project.collection.remove({_id:_id}, true, function(err, result){
     res.send({result:result});
   });
 };
-*/
 

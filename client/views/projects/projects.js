@@ -116,15 +116,11 @@
       });
     };
 
-
-/*
     $scope.deleteProject = function(projectId){
-      Show.deleteProject(projectId).then(function(response){
+      Project.deleteProject(projectId).then(function(response){
         $location.path('/projects');
       });
     };
-*/
-
 
   }]);
 })();

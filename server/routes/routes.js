@@ -29,6 +29,7 @@ module.exports = function(app, express){
   app.post('/projects', projects.create);
   app.get('/projects/:id', projects.show);
   app.post('/projects/:id', projects.update);
+  app.delete('/projects/:id', projects.deleteProject);
   app.get('/users', users.index);
 
   app.use(security.bounce);
