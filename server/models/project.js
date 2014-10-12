@@ -12,6 +12,7 @@ function Project(userId, projectInfo, files){
   this._id           = new Mongo.ObjectID();
   this.name          = projectInfo.name;
   this.due           = new Date(projectInfo.due);
+  this.notes         = projectInfo.notes;
   this.doc           = stashDoc(this._id, files);
   this.researchers   = [];
   this.researchers.push(Mongo.ObjectID(userId));

@@ -18,6 +18,7 @@ block content
               // th Complete?
               th Name
               th Due
+              th Notes
               th Document
               th Collaborators
           tbody
@@ -25,6 +26,7 @@ block content
               // td: input(type='checkbox', ng-model='project.isComplete')
               td {{project.name}}
               td {{project.due | date}}
+              td {{project.notes}}
               td {{project.origFilename}}
               td(ng-repeat='r in p.researchers') {{r.email}}
   .col-xs-3
