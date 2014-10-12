@@ -23,6 +23,7 @@ module.exports = function(app, express){
   app.use(debug.info);
 
   app.get('/home', home.index);
+  app.get('/about', home.about);
   app.post('/register', users.register);
   app.post('/login', users.login);
   app.get('/projects', projects.index);
