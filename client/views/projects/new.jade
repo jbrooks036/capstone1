@@ -1,18 +1,18 @@
 style.
   h3{
     font-weight: bold;
-    color: aqua;
+    color: white;
+    text-shadow: 1px 3px 1px #000;
   }
 block content
   h3 New Project
 
-
 .row
-  .col-xs-12
+  .col-xs-6
     .panel.panel-default
       .panel-body
         .row
-          .col-xs-3
+          .col-xs-12
             form(novalidate, name='projectForm', role='form')
               .form-group
                 label(for='name') Name
@@ -30,4 +30,4 @@ block content
 
 
               .form-group
-                button.btn.btn-success(ng-show='projectForm.$valid', ng-click='addProject()') Add Project
+                button.btn.btn(ng-show='projectForm.$valid', ng-click='addProject()') Add Project
