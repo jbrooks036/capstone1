@@ -1,29 +1,40 @@
-h3 Projects Page!
+style.
+  h3{
+    font-weight: bold;
+    color: aqua;
+  }
+block content
+  h3 My Projects
 
 .row
   .col-xs-12
     .panel.panel-default
       .panel-body
-        .form-group
-          label(for='sort') Sort
-          select.form-control(name='sort', ng-model='sort')
-            option(value='name') Name Ascending
-            option(value='-name') Name Descending
-            option(value='due') Due Ascending
-            option(value='-due') Due Descending
+        .row
+          .col-xs-3
+            .form-group
+              label(for='sort') Sort
+              select.form-control(name='sort', ng-model='sort')
+                option(value='name') Name Ascending
+                option(value='-name') Name Descending
+                option(value='due') Due Ascending
+                option(value='-due') Due Descending
+          .col-xs-9
 
-        table.table.table-bordered
-          thead
-            tr
-              // th Complete?
-              th Name
-              th Due
-              th Collaborators
-          tbody
-            // tr(ng-repeat='p in projects | orderBy:sort', ng-class='{complete:p.isComplete}')
-            tr(ng-repeat='p in projects | orderBy:sort')
-              // td: input(type='checkbox', ng-model='p.isComplete')
-              td: a(href='/#/projects/{{p._id}}')  {{p.name}}
-              td {{p.due | date}}
-              td {{p.researchers}}
+        .row
+          .col-xs-12
+            table.table.table-bordered
+              thead
+                tr
+                  // th Complete?
+                  th Name
+                  th Due
+                  th Collaborators
+              tbody
+                // tr(ng-repeat='p in projects | orderBy:sort', ng-class='{complete:p.isComplete}')
+                tr(ng-repeat='p in projects | orderBy:sort')
+                  // td: input(type='checkbox', ng-model='p.isComplete')
+                  td: a(href='/#/projects/{{p._id}}')  {{p.name}}
+                  td {{p.due | date}}
+                  td(ng-repeat='r in p.researchers | filter:{r.email:"!{{email}}"}') {{r.email}}
 

@@ -2,7 +2,7 @@
   'use strict';
 
   angular.module('capstone1')
-  .controller('ProjectsCtrl', ['$scope', '$upload', '$location', 'Project', 'User', '$routeParams', function($scope, $upload, $location, Project, User, $routeParams){
+  .controller('ProjectsCtrl', ['$scope', '$upload', '$location', '$localForage', 'Project', 'User', '$routeParams', function($scope, $upload, $location, $localForage, Project, User, $routeParams){
 
     // set $scope's
     $scope.sort = 'name';
@@ -15,6 +15,47 @@
     });
 
     // set up for Index of Projects
+    Project.all().then(function(response){
+      console.log('client-controller-all >>>>>>>>>>>>response: ', response);
+      $scope.projects = response.data.projects;
+      console.log('client-controller-all >>>>>>>>>>>>$scope.projects: ', $scope.projects);
+
+      // for each project in all of user's projects:
+      for (var i = 0; i < $scope.projects.length; i++) {
+        // debugger;
+
+        // replace researchers [array of user ids] with [array of user objects] -- to support display of login emails
+        console.log('client-controller-all >>>>>>>>>>>>$scope.projects[i]: ', $scope.projects[i]);
+        for (var j=0; j < $scope.projects[i].researchers.length; j++) {
+          console.log('$scope.projects[i].researchers[j] -------- ', $scope.projects[i].researchers[j]);
+          for (var k=0; k < $scope.users.length; k++) {
+            console.log('$scope.users[k] initial: -------- ', $scope.users[k]);
+            if ($scope.projects[i].researchers[j] === $scope.users[k]._id) {
+              $scope.projects[i].researchers[j] = $scope.users[k];
+              console.log('$scope.users[k] replaced: -------- ', $scope.users[k]);
+            }
+          }
+        }
+
+        // set up for Show Project
+        console.log('client-controller-all >>>>>>>>>>>>$routeParams: ', $routeParams);
+        if ($routeParams.projectId) {
+            if ($scope.projects[i]._id === $routeParams.projectId) {
+                $scope.project = $scope.projects[i];
+                break;
+            }
+          }
+        }
+
+        if ($routeParams.projectId) {
+          console.log('client-controller-all >>>>>>>>>>>>$routeParams2**: ', $routeParams);
+          $location.path('/projects/' + $scope.project._id);
+        }
+
+      });
+
+/*
+    // DUPLICATE (ORIGINAL):  set up for Index of Projects
     Project.all().then(function(response){
       console.log('client-controller-all >>>>>>>>>>>>response: ', response);
       console.log('client-controller-all >>>>>>>>>>>>$routeParams: ', $routeParams);
@@ -30,10 +71,16 @@
           }
         }
         console.log('client-controller-all >>>>>>>>>>>>$scope.project: ', $scope.project);
+        $scope.projResearchersEmails = [];
+        for (i=0; i < $scope.project.researchers.length; i++) {
+          $scope.projResearchersEmails.push($scope.project.researchers[i].email);
+        }
+        console.log('client-controller-all >>>>>>>>>>>>$scope.projResearchersEmails: ', $scope.projResearchersEmails);
         $location.path('/projects/' + $scope.project._id);
       }
       // debugger;
     });
+*/
 
     // Add New Project
     $scope.addProject = function(){
@@ -54,6 +101,7 @@
 
     // set up for Update Project (on Show page)
     $scope.toggleProject = function(){
+      console.log('$scope.project>>>>>', $scope.project);
       $scope.showProject = !!!$scope.showProject;
     };
 
@@ -67,14 +115,6 @@
         // $window.location.reload();
       });
     };
-
-/*
-    $scope.collaborators = function(){
-      this.findCollaboratorsByUserId($scope.userId).then(function(response){
-      // ***** this needs to be fixed ***
-      });
-    };
-*/
 
 
 /*

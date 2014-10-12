@@ -30,7 +30,7 @@ exports.login = function(req, res){
 };
 
 exports.logout = function(req, res){
-  console.log('server-user-controller-logout >>>>>>>>>>>  req.session: ', req.session);
+  // console.log('server-user-controller-logout >>>>>>>>>>>  req.session: ', req.session);
   req.session.destroy(function(){
     res.setHeader('X-Authenticated-User', 'anonymous');
     res.status(200).end();
@@ -38,9 +38,9 @@ exports.logout = function(req, res){
 };
 
 exports.index = function(req, res){
-  console.log('server-user-controller-index >>>>>>>> req.session: ', req.session);
+  // console.log('server-user-controller-index >>>>>>>> req.session: ', req.session);
   User.findAll(function(err, users){
-    console.log('server-user-controller-index >>>>>>>> users: ', users);
+    // console.log('server-user-controller-index >>>>>>>> users: ', users);
     res.send({users:users});
   });
 };

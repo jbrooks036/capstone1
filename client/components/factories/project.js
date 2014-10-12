@@ -13,6 +13,11 @@
       return $http.get('/projects');
     }
 
+    function findByProjectId(projectId){
+      console.log('client-project-factory-findByProjectId >>>>>>>>>> projectId: ', projectId);
+      return $http.get('/projects/' + projectId);
+    }
+
     function addProjectWithFiles(project, files){
       var file = files ? files[0] : null;
       return $upload.upload({
@@ -32,12 +37,9 @@
       // .xhr(funtion(xhr){xhr.upload.addeventListener(...)})
     }
 
-    function findByProjectId(projectId){
-      console.log('client-project-factory-findByProjectId >>>>>>>>>> projectId: ', projectId);
-      return $http.get('/projects/' + projectId);
-    }
-
     function updateProject(project, files){
+      console.log('c-factory-projects-updateProject >>>>>>> project: ', project);
+      console.log('c-factory-projects-updateProject >>>>>>> files: ', files);
       // prevents errors if no file is selected
       var file = files ? files[0] : null;
       return $upload.upload({

@@ -16,6 +16,9 @@ function Project(userId, projectInfo, files){
   this.researchers   = [];
   this.researchers.push(Mongo.ObjectID(userId));
   this.researchers.push(Mongo.ObjectID(projectInfo.collaborator));
+  if (files.file) {
+    this.origFilename = files.file[0].originalFilename;
+  }
 //  this.tags   = o.tags.split(',');
 //  console.log('server-Project-constructor >>>>>>>>>>>>>> new project: ', this);
 }
@@ -24,22 +27,23 @@ Object.defineProperty(Project, 'collection', {
   get: function(){return global.mongodb.collection('projects');}
 });
 
-Project.create = function(userId, fields, files, cb){
-  var p = new Project(userId, fields, files);
-  console.log('model-create >>>>>>>>>>> typeof p: ', typeof p);
+Project.create = function(userId, projInfo, files, cb){
+  console.log('model-create >>>>>>>>>>> projInfo: ', projInfo);
+  var p = new Project(userId, projInfo, files);
+  console.log('model-create >>>>>>>>>>> p: ', p);
   Project.collection.save(p, cb);
 };
 
 Project.findAllByUserId = function(userId, cb){
-//  console.log(' model - findAllByUserId >>>>>>>>>>> userId: ', userId);
   Project.collection.find({researchers: userId}).toArray(function(err, projects){
     for(var i = 0; i < projects.length; i++) {
       projects[i] = rePrototype(projects[i]);
-      console.log('model-findAllByUserId >>>>>>>>>>> typeof projects[i]: ', typeof projects[i]);
+      // console.log('model-findAllByUserId >>>>>>>>>>> typeof projects[i]: ', typeof projects[i]);
     }
     cb(err, projects);
   });
 };
+// Project.prototype.convertUserIdsToObjects = function(cb){
 
 // Dave Boling says this function is never called!!
 // BUT it is called for update(!)
@@ -55,7 +59,7 @@ Project.findByProjectId = function(projId, userId, cb){
     var proj = rePrototype(obj);
     console.log('model-findByProjectId >>>>>>>>>>> proj: ', proj);
     console.log('model-findByProjectId >>>>>>>>>>> typeof proj: ', typeof proj);
-    cb(proj);
+    cb(null, proj);
   });
 };
 
@@ -66,7 +70,7 @@ Project.prototype.save = function(fields, file, cb){
     self          = this;
 
   properties.forEach(function(property){
-    console.log('s-project-controller-save >>>>>>>>> property: ', property);
+    console.log('model-project-save >>>>>>>>> property: ', property);
     switch(property){
       case 'collaborator':
         self.researchers.push(fields.collaborator);
@@ -87,7 +91,7 @@ Project.prototype.save = function(fields, file, cb){
 
 Project.prototype.convertUserIdsToObjects = function(cb){
   async.map(this.researchers, iteratorFn, function(err, researchers){
-    console.log('s-model-project-convertUserIds2Objs >>>>>>>>>> researchers: ', researchers);
+    console.log('model-project-convertUserIds2Objs >>>>>>>>>> researchers: ', researchers);
     this.researchers = researchers;
   });
 };
@@ -95,8 +99,6 @@ Project.prototype.convertUserIdsToObjects = function(cb){
 function iteratorFn(rId, cb){
   User.findById(rId, cb);
 }
-
-
 
 
  // User.findByIds(this.collaborators, function(users){

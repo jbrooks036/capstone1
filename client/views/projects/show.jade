@@ -10,15 +10,15 @@ h3 Show Project Page!
               // th Complete?
               th Name
               th Due
+              th Document
               th Collaborators
-              th Documents
           tbody
             tr
               // td: input(type='checkbox', ng-model='project.isComplete')
               td {{project.name}}
               td {{project.due | date}}
-              td {{project.researchers}}
-              td {{project.doc}}
+              td {{project.origFilename}}
+              td(ng-repeat='r in p.researchers') {{r.email}}
   .col-xs-3
 
 .row

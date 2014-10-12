@@ -6,9 +6,6 @@
     Home.getMessage().then(function(response){
       $scope.msg = response.data;
 
-      $interval(function(){
-        $scope.msg = _.shuffle($scope.msg);
-      }, 500);
     });
   }]);
 })();
