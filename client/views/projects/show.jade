@@ -20,7 +20,7 @@ block content
               th Due
               th Notes
               th Document
-              th Collaborators
+              th Collaborator
           tbody
             tr
               // td: input(type='checkbox', ng-model='project.isComplete')
@@ -28,7 +28,7 @@ block content
               td {{project.due | date}}
               td {{project.notes}}
               td {{project.origFilename}}
-              td(ng-repeat='r in p.researchers') {{r.email}}
+              td {{project.collaborator.email}}
   .col-xs-3
 
 .row

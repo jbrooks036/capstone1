@@ -30,12 +30,12 @@ block content
                   // th Complete?
                   th Name
                   th Due
-                  th Collaborators
+                  // th Collaborator
               tbody
                 // tr(ng-repeat='p in projects | orderBy:sort', ng-class='{complete:p.isComplete}')
                 tr(ng-repeat='p in projects | orderBy:sort')
                   // td: input(type='checkbox', ng-model='p.isComplete')
                   td: a(href='/#/projects/{{p._id}}')  {{p.name}}
                   td {{p.due | date}}
-                  td(ng-repeat='r in p.researchers | filter:{r.email:"!{{email}}"}') {{r.email}}
+                  // td {{p.collaborator.email}}
 
