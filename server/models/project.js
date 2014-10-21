@@ -13,6 +13,7 @@ function Project(userId, projectInfo, files){
   this.name          = projectInfo.name;
   this.due           = new Date(projectInfo.due);
   this.notes         = projectInfo.notes;
+  this.currUserId    = userId;
   this.doc           = stashDoc(this._id, files);
   this.researchers   = [];
   this.researchers.push(Mongo.ObjectID(userId));
@@ -37,14 +38,55 @@ Project.create = function(userId, projInfo, files, cb){
 
 Project.findAllByUserId = function(userId, cb){
   Project.collection.find({researchers: userId}).toArray(function(err, projects){
+    console.log('model-findAllByUserId >>>>>>>>>>> projects: ', projects);
     for(var i = 0; i < projects.length; i++) {
-      projects[i] = rePrototype(projects[i]);
-      // console.log('model-findAllByUserId >>>>>>>>>>> typeof projects[i]: ', typeof projects[i]);
+      console.log('model-findAllByUserId >>>>>>>>>>> i: ', i);
+      console.log('model-findAllByUserId >>>>>>>>>>> projects[i]: ', projects[i]);
+      projects[i].currUserId = userId;
+      var rObjArray = [];
+      async.map(projects[i].researchers, iteratorFn(rObj, cb), finalCB(err, rObjArray));
     }
     cb(err, projects);
   });
 };
-// Project.prototype.convertUserIdsToObjects = function(cb){
+
+function iteratorFn(rId, cb){
+  User.findById(rId, cb);
+}
+
+finalCB = function(cb, rObjArray){
+  console.log('model-project-finalCB >>>>>>>>>> rObjArray: ', rObjArray);
+  projects[i].researchers = rObjArray;
+  console.log('model-findAllByUserId >>>>>>>>>>> projects[i]: ', projects[i]);
+  finalCB(null, rObjArray);
+  this.researchers = researchers;
+};
+
+/* "original" async.map stuff
+Project.findAllByUserId = function(userId, cb){
+  Project.collection.find({researchers: userId}).toArray(function(err, projects){
+    console.log('model-findAllByUserId >>>>>>>>>>> projects: ', projects);
+    for(var i = 0; i < projects.length; i++) {
+      console.log('model-findAllByUserId >>>>>>>>>>> i: ', i);
+      projects[i].currUserId = userId;
+      projects[i].convertUserIdsToObjects(;
+      console.log('model-findAllByUserId >>>>>>>>>>> projects[i]: ', projects[i]);
+    }
+    cb(err, projects);
+  });
+};
+
+Project.prototype.convertResearcherIdsToObjects = function(cb){
+  async.map(this.researchers, iteratorFn(rObj, cb), function(err, researchers){
+    console.log('model-project-convertUserIds2Objs >>>>>>>>>> researchers: ', researchers);
+    this.researchers = researchers;
+  });
+};
+
+function iteratorFn(rId, cb){
+  User.findById(rId, cb);
+}
+*/
 
 // Dave Boling says this function is never called!!
 // BUT it is called for update(!)
@@ -90,24 +132,6 @@ Project.prototype.save = function(fields, file, cb){
   Project.collection.save(this, cb);
 };
 
-Project.prototype.convertUserIdsToObjects = function(cb){
-  async.map(this.researchers, iteratorFn, function(err, researchers){
-    console.log('model-project-convertUserIds2Objs >>>>>>>>>> researchers: ', researchers);
-    this.researchers = researchers;
-  });
-};
-
-function iteratorFn(rId, cb){
-  User.findById(rId, cb);
-}
-
-
- // User.findByIds(this.collaborators, function(users){
- //   console.log('s-model-convertUserIdsToObjs >>>>>>> this: ', this);
- //   console.log('s-model-convertUserIdsToObjs >>>>>>> users: ', users);
- //   this.collaborators = users;
- // });
-// };
 
 module.exports = Project;
 

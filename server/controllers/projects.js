@@ -3,6 +3,7 @@
 var Project = require('../models/project'),
     Mongo   = require('mongodb'),
     _       = require('lodash'),
+    // User    = require('../models/user'),
     mp      = require('multiparty');
 
 
@@ -33,6 +34,7 @@ exports.create = function(req, res){
 exports.show = function(req, res){
   console.log('server-controller-show >>>>>>>> req.project._id: ', req.project._id);
   // req.user._id to be replaced by async.map when adding > 1 collaborator
+  // here goes the user look-up
   Project.findByProjectId(req.params._id, req.user._id, function(err, project){
     console.log('server-controller-show >>>>>>>> project: ', project);
     res.send({project:project});
