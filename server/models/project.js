@@ -12,6 +12,7 @@ function Project(userId, projectInfo, files){
   this._id           = new Mongo.ObjectID();
   this.name          = projectInfo.name;
   this.due           = new Date(projectInfo.due);
+  this.isComplete    = false;
   this.notes         = projectInfo.notes;
   this.currUserId    = userId;
   this.doc           = stashDoc(this._id, files);
@@ -37,12 +38,13 @@ Project.create = function(userId, projInfo, files, cb){
 };
 
 Project.findAllByUserId = function(userId, projectsArrCB){
+  console.log('model-findAllByUserId >>>>>>>>>>> userId: ', userId);
   Project.collection.find({researchers: userId}).toArray(function(err, projects){
     console.log('model-findAllByUserId >>>>>>>>>>> START projects: ', projects);
     async.map(projects, iterator1, function(err, revisedProjectsArray){
       projects = revisedProjectsArray;
       console.log('model-findAllByUserId >>>>>>>>>>> END projects: ', projects);
-      console.log('model-findAllByUserId >>>>>>>>>>> projects[0].researchers: ', projects[0].researchers);
+      // console.log('model-findAllByUserId >>>>>>>>>>> projects[0].researchers: ', projects[0].researchers);
       projectsArrCB(null, projects);
     });
   });
@@ -65,7 +67,6 @@ function iterator2(rId, cb){
     cb(null, rObj);
   });
 }
-
 
 
 // Dave Boling says this function is never called!!
@@ -95,6 +96,8 @@ Project.prototype.save = function(fields, file, cb){
   properties.forEach(function(property){
     console.log('model-project-save >>>>>>>>> property: ', property);
     switch(property){
+      case 'researchers':
+        break;
       case 'collaborator':
         self.researchers.push(fields.collaborator);
         break;

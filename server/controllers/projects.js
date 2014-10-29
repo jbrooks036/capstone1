@@ -33,8 +33,6 @@ exports.create = function(req, res){
 
 exports.show = function(req, res){
   console.log('server-controller-show >>>>>>>> req.project._id: ', req.project._id);
-  // req.user._id to be replaced by async.map when adding > 1 collaborator
-  // here goes the user look-up
   Project.findByProjectId(req.params._id, req.user._id, function(err, project){
     console.log('server-controller-show >>>>>>>> project: ', project);
     res.send({project:project});
@@ -47,14 +45,16 @@ exports.update = function(req, res){
     // put fields into a format that is easier to work with
     var projectInfo = JSON.parse(fields.project[0]);
     console.log('server-projects-controller-update >>>>>>>> projectInfo: ', projectInfo);
+    console.log('server-projects-controller-update >>>>>>>> file: ', file);
 
     Project.findByProjectId(projectInfo._id, req.user._id, function(err, project){
       // console.log('server-projects-controller-update >>>>>>>> project: ', project);
       // console.log('server-projects-controller-update >>>>>>>> typeof project: ', typeof project);
-      // not sure why this is necessary, but passed in project is not correctly prototyped
+      // not sure why this is necessary here, but passed in project is not correctly prototyped
       project = _.create(Project.prototype, project);
 
       project.save(projectInfo, file, function(){
+      console.log('server-projects-controller-update(save) >>>>>>>> project: ', project);
         res.send({project:project});
       });
     });

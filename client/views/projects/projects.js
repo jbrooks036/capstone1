@@ -2,16 +2,20 @@
   'use strict';
 
   angular.module('capstone1')
-  .controller('ProjectsCtrl', ['$scope', '$upload', '$location', '$localForage', 'Project', 'User', '$routeParams', function($scope, $upload, $location, $localForage, Project, User, $routeParams){
+  .controller('ProjectsCtrl', ['$scope', '$upload', '$location', '$window', '$localForage', 'Project', 'User', '$routeParams',
+    function($scope, $upload, $location, $window, $localForage, Project, User, $routeParams){
 
     // set $scope's
+    $localForage.getItem('email').then(function(email){
+      $scope.email = email; //** the getItem is async, and execution proceeds before assignment(!)
+    });
     $scope.sort = 'name';
     $scope.project = {};
     $scope.projects = [];
     User.all().then(function(response){
       // console.log('client-controller >>>>>>>>>>>>>>>>>> User.all-response: ', response.data);
       $scope.users = response.data.users;
-      // console.log('client-controller >>>>>>>>>>>>>>>>>> $scope.users: ', $scope.users);
+      console.log('client-controller >>>>>>>>>>>>>>>>>> $scope.users: ', $scope.users);
     });
 
     // set up for Index of Projects
@@ -39,15 +43,6 @@
               }
             }
           }
-          /*
-          for (var k=0; k < $scope.users.length; k++) {
-            console.log('$scope.users[k] initial: -------- ', $scope.users[k]);
-            if ($scope.projects[i].researchers[j] === $scope.users[k]._id) {
-              $scope.projects[i].researchers[j] = $scope.users[k];
-              console.log('$scope.users[k] replaced: -------- ', $scope.users[k]);
-            }
-          }
-          */
         }
 
         // set up for Show Project
@@ -56,6 +51,7 @@
             if ($scope.projects[i]._id === $routeParams.projectId) {
                 $scope.project = $scope.projects[i];
                 console.log('setup for ShowProject, $scope.project: ', $scope.project);
+                console.log('client-controller-all - s >>>>>>>>>>>>>>>>>> $scope.email: ', $scope.email);
                 break;
             }
           }
@@ -113,7 +109,6 @@
       $scope.files = $files;
     };
 
-    /*
     // set up for Update Project (on Show page)
     $scope.toggleProject = function(){
       console.log('$scope.project>>>>>', $scope.project);
@@ -127,10 +122,9 @@
       console.log('c-projects-controller-update >>>>>>>>>> response:  ', response);
         $scope.toggleProject();
         // reload page so that updated doc, date, etc are displayed??
-        // $window.location.reload();
+        $window.location.reload();
       });
     };
-    */
 
     $scope.deleteProject = function(projectId){
       Project.deleteProject(projectId).then(function(response){
