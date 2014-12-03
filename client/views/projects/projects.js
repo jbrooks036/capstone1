@@ -2,6 +2,18 @@
   'use strict';
 
   angular.module('capstone1')
+
+  .filter('ignoreSelf', function(){
+    return function(items, ignore){
+      var filtered = [];
+      items.forEach(function(item){
+        if (item.email !== ignore){
+          filtered.push(item);
+        }
+      });
+      return filtered;
+    };
+  })
   .controller('ProjectsCtrl', ['$scope', '$upload', '$location', '$window', '$localForage', 'Project', 'User', '$routeParams',
     function($scope, $upload, $location, $window, $localForage, Project, User, $routeParams){
 
@@ -9,6 +21,7 @@
     $localForage.getItem('email').then(function(email){
       $scope.email = email; //** the getItem is async, and execution proceeds before assignment(!)
     });
+
     $scope.sort = 'name';
     $scope.project = {};
     $scope.projects = [];
