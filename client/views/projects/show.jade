@@ -39,7 +39,7 @@ block content
                   button Toggle
               td {{project.notes}}
               td {{project.origFilename}}
-              td email {{email}}
+              // td email {{email}}
               td
                 p(ng-repeat='r in project.researchers | ignoreSelf:email') {{r.email}}
   .col-xs-3

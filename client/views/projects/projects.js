@@ -4,16 +4,22 @@
   angular.module('capstone1')
 
   .filter('ignoreSelf', function(){
+    // debugger;
     return function(items, ignore){
       var filtered = [];
-      items.forEach(function(item){
-        if (item.email !== ignore){
-          filtered.push(item);
-        }
-      });
+      console.log('Client-projects.js/.filter >>>>>>>>>>>>>>items: ', items);
+      console.log('Client-projects.js/.filter >>>>>>>>>>>>>>ignore: ', ignore);
+      if (items){
+        items.forEach(function(item){
+          if (item.email !== ignore){
+            filtered.push(item);
+          }
+        });
+      }
       return filtered;
     };
   })
+
   .controller('ProjectsCtrl', ['$scope', '$upload', '$location', '$window', '$localForage', 'Project', 'User', '$routeParams',
     function($scope, $upload, $location, $window, $localForage, Project, User, $routeParams){
 
