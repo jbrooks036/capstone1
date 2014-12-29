@@ -10,7 +10,7 @@ html(ng-app='capstone1', lang='en')
     link(href='/vendor/toastr/toastr.css', rel='stylesheet')
     link(href='/index.css', rel='stylesheet')
     // link(href='/views/projects/projects.css', rel='stylesheet')
-    // link(href='/views/projects/newProject.css', rel='stylesheet')
+
   body
     include nav
     .container
@@ -19,7 +19,9 @@ html(ng-app='capstone1', lang='en')
           #container(ng-view)
 
     script(src='/vendor/jquery/dist/jquery.js')
+    script(src='/vendor/ng-file-upload/angular-file-upload-shim.js')
     script(src='/vendor/angular/angular.js')
+    script(src='/vendor/ng-file-upload/angular-file-upload.js')
     script(src='/vendor/angular-route/angular-route.js')
     script(src='/vendor/bootstrap/dist/js/bootstrap.js')
     script(src='/vendor/underscore/underscore.js')
@@ -30,6 +32,7 @@ html(ng-app='capstone1', lang='en')
     script(src='/index.js')
     script(src='/nav.js')
     script(src='/views/home/home.js')
+    script(src='/views/about/about.js')
     script(src='/views/register/register.js')
     script(src='/views/login/login.js')
     script(src='/views/logout/logout.js')

@@ -23,11 +23,15 @@ module.exports = function(app, express){
   app.use(debug.info);
 
   app.get('/home', home.index);
+  app.get('/about', home.about);
   app.post('/register', users.register);
   app.post('/login', users.login);
   app.get('/projects', projects.index);
   app.post('/projects', projects.create);
   app.get('/projects/:id', projects.show);
+  app.post('/projects/:id', projects.update);
+  app.delete('/projects/:id', projects.deleteProject);
+  app.get('/users', users.index);
 
   app.use(security.bounce);
   app.delete('/logout', users.logout);

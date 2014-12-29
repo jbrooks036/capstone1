@@ -12,7 +12,6 @@ function Project(userId, projectInfo, files){
   this._id           = new Mongo.ObjectID();
   this.name          = projectInfo.name;
   this.due           = new Date(projectInfo.due);
-  this.isComplete    = false;
   this.notes         = projectInfo.notes;
   this.currUserId    = userId;
   this.doc           = stashDoc(this._id, files);
@@ -38,36 +37,67 @@ Project.create = function(userId, projInfo, files, cb){
 };
 
 Project.findAllByUserId = function(userId, projectsArrCB){
-  console.log('model-findAllByUserId >>>>>>>>>>> userId: ', userId);
   Project.collection.find({researchers: userId}).toArray(function(err, projects){
     console.log('model-findAllByUserId >>>>>>>>>>> START projects: ', projects);
-    async.map(projects, iterator1, function(err, revisedProjectsArray){
-      projects = revisedProjectsArray;
-      console.log('model-findAllByUserId >>>>>>>>>>> END projects: ', projects);
-      // console.log('model-findAllByUserId >>>>>>>>>>> projects[0].researchers: ', projects[0].researchers);
-      projectsArrCB(null, projects);
-    });
+    if (projects.length > 0){
+      var i = 0; // for now, just replace researchers array in first project
+      console.log('model-findAllByUserId >>>>>>>>>>> i: ', i);
+      console.log('model-findAllByUserId >>>>>>>>>>> projects[i]: ', projects[i]);
+      projects[i].currUserId = userId;
+      var rIdArr    = projects[i].researchers;
+          // rObjArr = []; // for holding results of async.map applied to rIdArr
+      async.map(rIdArr, iteratorFn, function(err, rObjArr){
+        console.log('model-findAllByUserId >>>>>>>>>>> rObjArr: ', rObjArr);
+        projects[i].researchers = rObjArr;
+        console.log('model-findAllByUserId >>>>>>>>>>> projects[i]: ', projects[i]);
+      }); // end 'if'
+
+    }
+    console.log('model-findAllByUserId >>>>>>>>>>> DONE projects: ', projects);
+    projectsArrCB(null, projects);
   });
 };
 
-function iterator1(project, cb){
-  var rIdArr    = project.researchers;
-  async.map(rIdArr, iterator2, function(err, rObjArr){
-    // console.log('model-findAllByUserId-iter1 >>>>>>>>>>> rObjArr: ', rObjArr);
-    project.researchers = rObjArr;
-    console.log('model-findAllByUserId-iter1 >>>>>>>>>>> project: ', project);
-    cb(null, project);
-  });
-}
-
-function iterator2(rId, cb){
+function iteratorFn(rId, cb){
   User.findById(rId, function(err, rObj){
     delete rObj.password;
-    // console.log('model-findAllByUserId-iter2 >>>>>>>>>>> rObj: ', rObj);
     cb(null, rObj);
   });
 }
 
+/*
+projectsArrCB = function(cb, projectsArr){
+  console.log('model-project-projectsArrCB >>>>>>>>>> projectsArr: ', projectsArr);
+  finalCB(null, projectsArr);
+  this.researchers = researchers;
+};
+*/
+
+/* "original" async.map stuff
+Project.findAllByUserId = function(userId, cb){
+  Project.collection.find({researchers: userId}).toArray(function(err, projects){
+    console.log('model-findAllByUserId >>>>>>>>>>> projects: ', projects);
+    for(var i = 0; i < projects.length; i++) {
+      console.log('model-findAllByUserId >>>>>>>>>>> i: ', i);
+      projects[i].currUserId = userId;
+      projects[i].convertUserIdsToObjects(;
+      console.log('model-findAllByUserId >>>>>>>>>>> projects[i]: ', projects[i]);
+    }
+    cb(err, projects);
+  });
+};
+
+Project.prototype.convertResearcherIdsToObjects = function(cb){
+  async.map(this.researchers, iteratorFn(rObj, cb), function(err, researchers){
+    console.log('model-project-convertUserIds2Objs >>>>>>>>>> researchers: ', researchers);
+    this.researchers = researchers;
+  });
+};
+
+function iteratorFn(rId, cb){
+  User.findById(rId, cb);
+}
+*/
 
 // Dave Boling says this function is never called!!
 // BUT it is called for update(!)
@@ -96,8 +126,6 @@ Project.prototype.save = function(fields, file, cb){
   properties.forEach(function(property){
     console.log('model-project-save >>>>>>>>> property: ', property);
     switch(property){
-      case 'researchers':
-        break;
       case 'collaborator':
         self.researchers.push(fields.collaborator);
         break;

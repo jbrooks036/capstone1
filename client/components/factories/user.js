@@ -13,10 +13,15 @@
     }
 
     function logout(){
+      console.log('client-user-factory-logout >>>>>>>>>>>');
       return $http.delete('/logout');
     }
 
-    return {register:register, login:login, logout:logout};
+    function all(){
+      return $http.get('/users');
+    }
+
+    return {register:register, login:login, logout:logout, all:all};
   }]);
 })();
 

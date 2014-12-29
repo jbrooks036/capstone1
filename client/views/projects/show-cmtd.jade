@@ -4,11 +4,6 @@ style.
     color: white;
     text-shadow: 1px 3px 1px #000;
   }
-style.
-  label{
-    color: white;
-    text-shadow: 1px 3px 1px #000;
-  }
 block content
   h3 Show Project
 
@@ -23,30 +18,26 @@ block content
               // th Complete?
               th Name
               th Due
-              th Complete?
               th Notes
               th Document
+              th $scope.email // diagnostic only
               th Collaborators
           tbody
             tr
               // td: input(type='checkbox', ng-model='project.isComplete')
               td {{project.name}}
               td {{project.due | date}}
-              td
-                form(method='post', action='/projects/#{{project._id}}')
-                  input(type='hidden', name='_method', value='put')
-                  input(type='checkbox', checked='{{project.isComplete}}')
-                  button Toggle
               td {{project.notes}}
               td {{project.origFilename}}
-              // td email {{email}}
-              td
-                p(ng-repeat='r in project.researchers | ignoreSelf:email') {{r.email}}
+              td {{email}}
+              td(ng-repeat='r in project.researchers | filter: {email:"{{email}}"} ') {{r.email}}
+              // td(ng-repeat='r in project.researchers | filter: {email:{{$scope.email}} }' ) {{r.email}}
+              // - WORKS - td(ng-repeat='r in project.researchers | filter: {email: "rita@aol.com"} ') {{r.email}}
   .col-xs-3
 
 .row
   .col-xs-3.col-xs-offset-9
-    button.btn(ng-click='toggleProject()', ng-hide='showProject') Edit Project
+    // button.btn(ng-click='toggleProject()', ng-hide='showProject') Edit Project
     button.btn.btn-danger(ng-click='deleteProject(project._id)'): a(href='/#/projects') Delete Project
   .col-xs-9
 

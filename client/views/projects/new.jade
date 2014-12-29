@@ -1,13 +1,36 @@
-h3 New Project Page!
+style.
+  h3{
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 3px 1px #000;
+  }
+block content
+  h3 New Project
 
 .row
-  .col-xs-3
-    form(novalidate, name='projectForm', role='form')
-      .form-group
-        label(for='name') Name
-        input.form-control#name(name='name', type='text', ng-model='project.name', required, ng-minlength='3', autofocus)
-      .form-group
-        label(for='due') Due
-        input.form-control#due(name='due', type='date', ng-model='project.due', required)
-      .form-group
-        button.btn.btn-success(ng-show='projectForm.$valid', ng-click='addProject()') Add Project
+  .col-xs-6
+    .panel.panel-default
+      .panel-body
+        .row
+          .col-xs-12
+            form(novalidate, name='projectForm', role='form')
+              .form-group
+                label(for='name') Name
+                input.form-control#name(name='name', type='text', ng-model='project.name', required, ng-minlength='3', autofocus)
+              .form-group
+                label(for='due') Due
+                input.form-control#due(name='due', type='date', ng-model='project.due')
+              .form-group
+                label(for='doc') Document
+                input(type='file', ng-file-select='onFileSelect($files)', ng-model='project.doc')
+              .form-group
+                label(for='collaboratorId') Collaborator
+                select.form-control(name='collaboratorId', ng-model='project.collaborator', ng-options='u._id as u.email for u in users | orderBy:"email"')
+                  option(value='') Select Collaborator
+              .form-group
+                label(for='notes') Notes
+                input.form-control#notes(name='notes', type='textarea', ng-model='project.notes', rows='3', cols='30')
+
+
+              .form-group
+                button.btn.btn(ng-show='projectForm.$valid', ng-click='addProject()') Add Project

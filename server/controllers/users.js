@@ -1,6 +1,7 @@
 'use strict';
 
-var User = require('../models/user');
+var User  = require('../models/user');
+//    _     = require('lodash');
 
 exports.register = function(req, res){
   User.register(req.body, function(err, user){
@@ -29,9 +30,17 @@ exports.login = function(req, res){
 };
 
 exports.logout = function(req, res){
+  // console.log('server-user-controller-logout >>>>>>>>>>>  req.session: ', req.session);
   req.session.destroy(function(){
     res.setHeader('X-Authenticated-User', 'anonymous');
     res.status(200).end();
   });
 };
 
+exports.index = function(req, res){
+  // console.log('server-user-controller-index >>>>>>>> req.session: ', req.session);
+  User.findAll(function(err, users){
+    // console.log('server-user-controller-index >>>>>>>> users: ', users);
+    res.send({users:users});
+  });
+};

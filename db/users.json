@@ -13,4 +13,9 @@
   "email" : "lori@aol.com",
   "password" : "$2a$10$XR.IQktUUujLBxed70GQn.jWY1wZ9ThM0Tar9wTqzkI4Uk1uP2Or2"
 }
+{
+  "_id" : {"$oid":"000000000000000000000004"},
+  "email" : "carl@aol.com",
+  "password" : "$2a$10$XR.IQktUUujLBxed70GQn.jWY1wZ9ThM0Tar9wTqzkI4Uk1uP2Or2"
+}
 
