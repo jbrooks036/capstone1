@@ -48,9 +48,9 @@
         // debugger;
 
         // replace researchers [array of user ids] with [array of user objects] -- to support display of login emails
-        // console.log('client-controller-all >>>>>>>>>>>>$scope.projects[i]: ', $scope.projects[i]);
+        console.log('client-controller-all >>>>>>>>>>>>$scope.projects[i]: ', $scope.projects[i]);
         for (var j=0; j < $scope.projects[i].researchers.length; j++) {
-          // console.log('$scope.projects[i].researchers[j] -------- ', $scope.projects[i].researchers[j]);
+          console.log('$scope.projects[i].researchers[j] -------- ', $scope.projects[i].researchers[j]);
           if ($scope.projects[i].researchers[j].userId !== $scope.projects[i].currUserId){
             var collabId = $scope.projects[i].researchers[j].userId;
             for (var k=0; k < $scope.users.length; k++) {
@@ -113,10 +113,10 @@
 
     // Add New Project
     $scope.addProject = function(){
-      // console.log('client-projects-controller-addProject >>>>>>>>>>$scope.project: ', $scope.project);
-      // console.log('client-projects-controller-addProject >>>>>>>>>>$scope.files: ', $scope.files);
+      console.log('client-projects-controller-addProject >>>>>>>>>>$scope.project: ', $scope.project);
+      console.log('client-projects-controller-addProject >>>>>>>>>>$scope.files: ', $scope.files);
       Project.addProjectWithFiles($scope.project, $scope.files).then(function(response){
-      // console.log('client-projects-controller-addProject >>>>>>>>>> response: ', response);
+      console.log('client-projects-controller-addProject >>>>>>>>>> response: ', response);
         $scope.project = response.data.project;
         $scope.projects.push($scope.project);
         $scope.project = {};

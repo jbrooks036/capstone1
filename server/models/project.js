@@ -18,7 +18,9 @@ function Project(userId, projectInfo, files){
   this.doc           = stashDoc(this._id, files);
   this.researchers   = [];
   this.researchers.push(Mongo.ObjectID(userId));
-  this.researchers.push(Mongo.ObjectID(projectInfo.collaborator));
+  if (projectInfo.collaborator) {
+    this.researchers.push(Mongo.ObjectID(projectInfo.collaborator));
+  }
   if (files.file) {
     this.origFilename = files.file[0].originalFilename;
   }
@@ -62,7 +64,9 @@ function iterator1(project, cb){
 
 function iterator2(rId, cb){
   User.findById(rId, function(err, rObj){
-    delete rObj.password;
+    if (rObj){
+      delete rObj.password;
+    }
     // console.log('model-findAllByUserId-iter2 >>>>>>>>>>> rObj: ', rObj);
     cb(null, rObj);
   });
