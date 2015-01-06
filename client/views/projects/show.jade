@@ -29,17 +29,15 @@ block content
               th Collaborators
           tbody
             tr
-              // td: input(type='checkbox', ng-model='project.isComplete')
               td {{project.name}}
               td {{project.due | date}}
               td
-                form(method='post', action='/projects/#{{project._id}}')
+                form(method='post', action='/projects/project._id')
                   input(type='hidden', name='_method', value='put')
                   input(type='checkbox', checked='{{project.isComplete}}')
                   button Toggle
               td {{project.notes}}
-              td {{project.origFilename}}
-              // td email {{email}}
+              td: a(download='{{project.origFilename}}' href='{{project.doc}}') {{project.origFilename}}
               td
                 p(ng-repeat='r in project.researchers | ignoreSelf:email') {{r.email}}
   .col-xs-3

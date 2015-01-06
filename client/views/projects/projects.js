@@ -65,51 +65,25 @@
         }
 
         // set up for Show Project
-        // console.log('client-controller-all >>>>>>>>>>>>$routeParams: ', $routeParams);
+        console.log('client-controller-all >>>>>>>>>>>>$routeParams: ', $routeParams);
         if ($routeParams.projectId) {
-            if ($scope.projects[i]._id === $routeParams.projectId) {
-                $scope.project = $scope.projects[i];
-                console.log('setup for ShowProject, $scope.project: ', $scope.project);
-                console.log('client-controller-all - s >>>>>>>>>>>>>>>>>> $scope.email: ', $scope.email);
-                break;
-            }
+          if ($scope.projects[i]._id === $routeParams.projectId) {
+            $scope.project = $scope.projects[i];
+            console.log('setup for ShowProject, $scope.project: ', $scope.project);
+            console.log('client-controller-all - s >>>>>>>>>>>>>>>>>> $scope.email: ', $scope.email);
+            break;
           }
         }
+      }
 
         if ($routeParams.projectId) {
           // console.log('client-controller-all >>>>>>>>>>>>$routeParams2**: ', $routeParams);
+          console.log('client-controller-all >>>>>>>>>>>>$scope: ', $scope);
           $location.path('/projects/' + $scope.project._id);
-        }
-
-      });
-
-/*
-    // DUPLICATE (ORIGINAL):  set up for Index of Projects
-    Project.all().then(function(response){
-      console.log('client-controller-all >>>>>>>>>>>>response: ', response);
-      console.log('client-controller-all >>>>>>>>>>>>$routeParams: ', $routeParams);
-      $scope.projects = response.data.projects;
-      console.log('client-controller-all >>>>>>>>>>>>$scope.projects: ', $scope.projects);
-
-      // set up for Show Project
-      if ($routeParams.projectId) {
-        for (var i = 0; i < $scope.projects.length; i++) {
-          if ($scope.projects[i]._id === $routeParams.projectId) {
-              $scope.project = $scope.projects[i];
-              break;
-          }
-        }
-        console.log('client-controller-all >>>>>>>>>>>>$scope.project: ', $scope.project);
-        $scope.projResearchersEmails = [];
-        for (i=0; i < $scope.project.researchers.length; i++) {
-          $scope.projResearchersEmails.push($scope.project.researchers[i].email);
-        }
-        console.log('client-controller-all >>>>>>>>>>>>$scope.projResearchersEmails: ', $scope.projResearchersEmails);
-        $location.path('/projects/' + $scope.project._id);
       }
       // debugger;
     });
-*/
+
 
     // Add New Project
     $scope.addProject = function(){
