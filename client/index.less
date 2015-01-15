@@ -18,6 +18,8 @@
 @BLACK:   #111111;
 @GRAY:    #AAAAAA;
 @SILVER:  #DDDDDD;
+@LIGHT_GRAY: #F5F5F5;
+@WHITE:      #FFFFFF;
 
 .container {
   // background-image: url('/assets/img/blue-bg.jpg');
@@ -35,5 +37,65 @@ body{
 
 input.ng-invalid, select.ng-invalid{
   background-color: @GRAY;
+}
+
+#container {
+  position: relative;
+  margin: 15px 15px 0 15px;
+  background-color: @LIME; 
+}
+
+.container-fluid {
+  position: relative;
+  padding: 0;
+  height: 100%;
+}
+
+.navbar > .container-fluid {
+  position: relative;
+  margin-top: 1em;
+}
+
+.navbar {
+  margin: 0;
+  background-color: @LIME;
+}
+
+#bs-navbar-collapse {
+  margin-right: 15px;
+  margin-left: 15px;
+}
+.container-fluid > .navbar-header {
+  margin-left: 15px;
+  font-weight: bold;
+}
+
+.navbar-brand {
+  //font-size: 35px;
+}
+
+ul.navbar-right > li {
+ // font-size: 20px;
+}
+
+.panel {
+  color: @BLACK;
+  background-color: @LIGHT_GRAY;
+}
+
+.panel h1, .panel h2, .panel h3, .panel h4, .panel h5, .panel h6 {
+  color: @BLACK;
+}
+
+.white-wrapper h1, .white-wrapper h2, .white-wrapper h3, .white-wrapper h4, .white-wrapper h5, .white-wrapper h6 {
+  color: @BLACK;
+}
+
+.white-wrapper {
+  position: relative;
+  color: @BLACK;
+  background-color: @WHITE;
+  height: 100%;
+  width: 100%;
 }
 
