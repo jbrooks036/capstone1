@@ -16,6 +16,14 @@ exports.index = function(req, res){
   });
 };
 
+exports.show = function(req, res){
+  console.log('server-controller-show >>>>>>>> req.project._id: ', req.project._id);
+  Project.findByProjectId(req.params._id, req.user._id, function(err, project){
+    console.log('server-controller-show >>>>>>>> project: ', project);
+    res.send({project:project});
+  });
+};
+
 exports.create = function(req, res){
 //  console.log('server-controller-create >>>>>>>> req.user._id: ', req.user._id);
 //  console.log('server-controller-create >>>>>>>> req.body: ', req.body);
@@ -28,14 +36,6 @@ exports.create = function(req, res){
     Project.create(req.user._id, projectInfo, files, function(err, success, project){
       res.send({project:project});
     });
-  });
-};
-
-exports.show = function(req, res){
-  console.log('server-controller-show >>>>>>>> req.project._id: ', req.project._id);
-  Project.findByProjectId(req.params._id, req.user._id, function(err, project){
-    console.log('server-controller-show >>>>>>>> project: ', project);
-    res.send({project:project});
   });
 };
 

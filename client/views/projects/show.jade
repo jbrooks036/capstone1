@@ -31,6 +31,7 @@ block content
             tr
               td {{project.name}}
               td {{project.due | date}}
+              // td {{project.due}}
               td
                 form(method='post', action='/projects/project._id')
                   input(type='hidden', name='_method', value='put')

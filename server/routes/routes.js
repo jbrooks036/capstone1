@@ -29,7 +29,7 @@ module.exports = function(app, express){
   app.get('/projects', projects.index);
   app.post('/projects', projects.create);
   app.get('/projects/:id', projects.show);
-  app.post('/projects/:id', projects.update);
+  app.put('/projects/:id', projects.update);
   app.delete('/projects/:id', projects.deleteProject);
   app.get('/users', users.index);
 
