@@ -1,8 +1,9 @@
 (function(){
   'use strict';
 
-  angular.module('capstone1', ['ngRoute', 'LocalForageModule', 'angularFileUpload'])
+  angular.module('capstone1', ['ngRoute', 'LocalForageModule', 'angularFileUpload', 'mgcrea.ngStrap'])
   .config(['$routeProvider', '$httpProvider', '$localForageProvider', function($routeProvider, $httpProvider, $localForageProvider){
+  // .config(['$routeProvider', '$httpProvider', '$localForageProvider', function($routeProvider, $httpProvider, $localForageProvider){
     $routeProvider
     .when('/', {templateUrl:'/views/home/home.html', controller:'HomeCtrl'})
     .when('/about', {templateUrl:'/views/about/about.html', controller:'AboutCtrl'})
