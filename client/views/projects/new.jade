@@ -19,7 +19,7 @@ block content
                 input.form-control#name(name='name', type='text', ng-model='project.name', required, ng-minlength='3', autofocus)
               .form-group
                 label(for='due') Due
-                input.form-control#due(name='due', type='date', ng-model='project.due')
+                input.form-control#due(name='due' bs-datepicker, type='text', ng-model='project.due')
               .form-group
                 label(for='doc') Document
                 input(type='file', ng-file-select='onFileSelect($files)', ng-model='project.doc')
