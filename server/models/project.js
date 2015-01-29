@@ -11,7 +11,8 @@ var // bcrypt = require('bcrypt'),
 function Project(userId, projectInfo, files){
   this._id           = new Mongo.ObjectID();
   this.name          = projectInfo.name;
-  this.due           = new Date(projectInfo.due);
+  // this.due           = new Date(projectInfo.due);
+  this.due           = projectInfo.due;
   this.isComplete    = false;
   this.notes         = projectInfo.notes;
   this.currUserId    = userId;
