@@ -30,10 +30,6 @@
       });
     }
 
-    function deleteProject(projectId){
-      return $http.delete('/projects/'+ projectId);
-    }
-
     function updateProject(project, files){
       console.log('c-factory-projects-updateProject >>>>>>> project: ', project);
       console.log('c-factory-projects-updateProject >>>>>>> files: ', files);
@@ -46,6 +42,10 @@
         data: {project: project},
         file: file
       });
+    }
+
+    function deleteProject(projectId){
+      return $http.delete('/projects/'+ projectId);
     }
 
     return {all:all, create:create, deleteProject:deleteProject, findByProjectId:findByProjectId, updateProject:updateProject, addProjectWithFiles:addProjectWithFiles};

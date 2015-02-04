@@ -30,8 +30,7 @@ block content
           tbody
             tr
               td {{project.name}}
-              // td {{project.due | date}}
-              td {{project.due | date:'medium'}}
+              td {{project.due | date}}
               td
                 form(method='post', action='/projects/project._id')
                   input(type='hidden', name='_method', value='put')
@@ -67,7 +66,7 @@ block content
         .col-xs-4
           .form-group
             label(for='due') Due
-            input.form-control#due(name='due', type='text', ng-model='project.due')
+            input.form-control#due(name='due' bs-datepicker, type='text', ng-model='project.due')
           .form-group
             label(for='doc') Document
             input(type='file', ng-file-select='onFileSelect($files)', ng-model='project.doc')
