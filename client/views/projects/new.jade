@@ -5,10 +5,15 @@ style.
     text-shadow: 1px 3px 1px #000;
   }
 block content
-  h3 New Project
+.row
+  .col-xs-2
+  .col-xs-8
+    h3 New Project
+  .col-xs-2
 
 .row
-  .col-xs-6
+  .col-xs-2
+  .col-xs-8
     .panel.panel-default
       .panel-body
         .row
@@ -34,3 +39,4 @@ block content
 
               .form-group
                 button.btn.btn(ng-show='projectForm.$valid', ng-click='addProject()') Add Project
+  .col-xs-2

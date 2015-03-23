@@ -23,7 +23,6 @@ block content
               // th Complete?
               th Name
               th Due
-              th Complete?
               th Notes
               th Document
               th Collaborators
@@ -31,11 +30,6 @@ block content
             tr
               td {{project.name}}
               td {{project.due | date}}
-              td
-                form(method='post', action='/projects/project._id')
-                  input(type='hidden', name='_method', value='put')
-                  input(type='checkbox', checked='{{project.isComplete}}')
-                  button Toggle
               td {{project.notes}}
               td: a(download='{{project.origFilename}}' href='{{project.doc}}') {{project.origFilename}}
               td

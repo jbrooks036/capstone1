@@ -20,6 +20,7 @@
 @SILVER:  #DDDDDD;
 @LIGHT_GRAY: #F5F5F5;
 @WHITE:      #FFFFFF;
+@DARK_GRAY: #C0C0C0;
 
 .container {
   // background-image: url('/assets/img/blue-bg.jpg');
@@ -27,12 +28,12 @@
   background-color: @LIME;
   font-family: 'Open Sans Condensed', sans-serif;
   font-weight: bolder;
-  color: @NAVY;
+  color: @DARK_GRAY;
 
 }
 
 body{
-    background-color: @LIME;
+    background-color: @DARK_GRAY;
   }
 
 input.ng-invalid, select.ng-invalid{
@@ -42,7 +43,7 @@ input.ng-invalid, select.ng-invalid{
 #container {
   position: relative;
   margin: 15px 15px 0 15px;
-  background-color: @LIME; 
+  background-color: @DARK_GRAY;
 }
 
 .container-fluid {
@@ -59,6 +60,7 @@ input.ng-invalid, select.ng-invalid{
 .navbar {
   margin: 0;
   background-color: @LIME;
+  color: white;
 }
 
 #bs-navbar-collapse {
@@ -72,6 +74,8 @@ input.ng-invalid, select.ng-invalid{
 
 .navbar-brand {
   //font-size: 35px;
+  color: white;
+  font-weight: bold;
 }
 
 ul.navbar-right > li {
@@ -80,7 +84,7 @@ ul.navbar-right > li {
 
 .panel {
   color: @BLACK;
-  background-color: @LIGHT_GRAY;
+  background-color: @LIME;
 }
 
 .panel h1, .panel h2, .panel h3, .panel h4, .panel h5, .panel h6 {
@@ -99,3 +103,6 @@ ul.navbar-right > li {
   width: 100%;
 }
 
+.table {
+  background-color: @WHITE;
+}
