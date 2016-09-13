@@ -1,9 +1,11 @@
 'use strict';
 
-var port    = process.env.PORT,
-    db      = process.env.DB,
+var port    = process.env.PORT || 8080,
+    db      = process.env.DB || 'capstone',
     express = require('express'),
     app     = express();
+
+app.set('port', port);
 
 require('./lib/config')(app);
 require('./routes/routes')(app, express);
