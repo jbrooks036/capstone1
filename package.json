@@ -11,6 +11,9 @@
   "bugs": {
     "url": "https://github.com/jbrooks036/capstone1/issues"
   },
+  "scripts": {
+    "start": "node server/index.js"
+  },
   "homepage": "https://github.com/jbrooks036/capstone1",
   "dependencies": {
     "async": "^0.9.0",
